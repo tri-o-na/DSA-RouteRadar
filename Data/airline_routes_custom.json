@@ -14,6 +14,7 @@
 			"airport_code": "SIN",
 			"distance": 76,
 			"duration": 20,
+			"weather_condition": "Fine",
 			"airlines": [
 			{
 				"airline_code": "SQ",
@@ -42,6 +43,7 @@
 			"airport_code": "TCA",
 			"distance": 76,
 			"duration": 20,
+			"weather_condition": "Fine",
 			"airlines": [
 			{
 				"airline_code": "SQ",
@@ -57,6 +59,7 @@
 			"airport_code": "JHB",
 			"distance": 32,
 			"duration": 10,
+			"weather_condition": "Thunderstorm",
 			"airlines": [
 			{
 				"airline_code": "SQ",
@@ -85,6 +88,7 @@
 			"airport_code": "SIN",
 			"distance": 32,
 			"duration": 10,
+			"weather_condition": "Thunderstorm",
 			"airlines": [
 			{
 				"airline_code": "SQ",

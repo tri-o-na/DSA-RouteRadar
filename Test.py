@@ -15,13 +15,32 @@ def printRoutesInfo(airport_data):
     print("Routes: ")
     for route in airport_data["routes"]:
         print(f"Destination Airport Code: {route["airport_code"]}\nDistance (Km): {route["distance"]}\nDuration (Min): {route["duration"]}")
+        getWeatherCondition(route)
         airlineStr = ""
         for airline in route["airlines"]:
             airlineStr += f"{airline["airline_name"]}({airline["airline_code"]}), "
         airlineStr = airlineStr[:-2]
 
-        print(f"Available Airlines: {airlineStr}")
+        print(f"Available Airlines: {airlineStr}\n")
     pass
+
+def getWeatherCondition(route_data):
+    print(f"Weather Condition: {route_data["weather_condition"]}")
+    routeDelayMultiplier = 1
+
+    match route_data["weather_condition"]:
+        case "Fine":
+            print("Expect no delay to the flight time")
+            routeDelayMultiplier = 1
+        case "Heavy Rain" | "Heavy Snow":
+            print("Expect delay to the flight time")
+            routeDelayMultiplier = 1.5
+        case "Thunderstorm" | "Snowstorm" :
+            print("Expect flight cancellations")
+            routeDelayMultiplier = 0 # Return 0 to represent the flight being cancelled. To Update for any changes
+        
+    print(f"Route Delay Multiplier: {routeDelayMultiplier}x")
+
 
 file_path = 'Data/airline_routes_custom.json' # This is the json file path used for reference. Check if the path is correct
 
