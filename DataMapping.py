@@ -39,7 +39,7 @@ def InitAdjancyMatrix():
 
     # Step 6: Return adjancy matrix
     df = pd.DataFrame(adj_matrix, index=airport_codes, columns=airport_codes)
-    return df
+    return df, airport_codes
 
 df = InitAdjancyMatrix()
 print("Adjacency Matrix (Labeled):\n", df)
