@@ -1,0 +1,66 @@
+<MyLayout>:
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 20
+            size_hint: None, None
+            size: 400, 300  # Increased height to fit all elements
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: None, None
+                size: 400, 50
+                Label:
+                    text: "Departing Airport:"
+                    size_hint: None, None
+                    size: 150, 40
+                    halign: "left"
+                    valign: "middle"
+                    text_size: self.size
+                TextInput:
+                    id: text_input1
+                    hint_text: "Type here..."
+                    size_hint: None, None
+                    size: 250, 40
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: None, None
+                size: 400, 50
+                Label:
+                    text: "Arriving Airport:"
+                    size_hint: None, None
+                    size: 150, 40
+                    halign: "left"
+                    valign: "middle"
+                    text_size: self.size
+                TextInput:
+                    id: text_input2
+                    hint_text: "Type here..."
+                    size_hint: None, None
+                    size: 250, 40
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: None, None
+                size: 400, 50
+                Label:
+                    text: "Cost:"
+                    size_hint: None, None
+                    size: 150, 40
+                Spinner:
+                    id: dropdown
+                    text: "Choose"
+                    values: ["0-500", "500-1000", "1000-2000"]
+                    size_hint: None, None
+                    size: 250, 40
+
+            Button:
+                text: "Submit"
+                size_hint: None, None
+                size: 150, 50
+                pos_hint: {"center_x": 0.5}
+                on_press: root.on_button_press()
