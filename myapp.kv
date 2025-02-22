@@ -22,7 +22,7 @@ ScreenManager:
                 Label:
                     text: "Departing Airport:"
                     size_hint: None, None
-                    size: 150, 40
+                    size: 190, 40
                     halign: "left"
                     valign: "middle"
                     text_size: self.size
@@ -39,7 +39,7 @@ ScreenManager:
                 Label:
                     text: "Arriving Airport:"
                     size_hint: None, None
-                    size: 150, 40
+                    size: 190, 40
                     halign: "left"
                     valign: "middle"
                     text_size: self.size
@@ -54,25 +54,17 @@ ScreenManager:
                 size_hint: None, None
                 size: 400, 50
                 Label:
-                    text: "Select option:"
+                    text: "Cost:"
                     size_hint: None, None
-                    size: 150, 40
+                    size: 190, 40
+                    halign: "left"
+                    valign: "middle"
                 Spinner:
                     id: dropdown
                     text: "nil"
-                    values: ["nil", "Option 1", "Option 2", "Option 3"]
+                    values: ["nil", "0-500", "500-1000", "1000-2000"]
                     size_hint: None, None
                     size: 250, 40
-
-            Label:
-                id: error_label
-                text: ""
-                color: 1, 0, 0, 1  # Red error text
-                size_hint: None, None
-                size: 400, 30
-                halign: "center"
-                valign: "middle"
-                text_size: self.size
 
             Button:
                 text: "Submit"
@@ -80,6 +72,16 @@ ScreenManager:
                 size: 150, 50
                 pos_hint: {"center_x": 0.5}
                 on_press: root.on_submit()
+            
+            Label:
+                id: error_label
+                text: ""
+                color: 1, 0, 0, 1  # Red error text
+                size_hint: None, None
+                size: 400, 150
+                halign: "center"
+                valign: "middle"
+                text_size: self.size
 
 <SecondScreen>:
     name: "second"

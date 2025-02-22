@@ -1,5 +1,6 @@
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
+import re
 
 class FirstScreen(Screen):
     def on_submit(self):
@@ -7,11 +8,34 @@ class FirstScreen(Screen):
         arriving = self.ids.text_input2.text.strip()
         selected_option = self.ids.dropdown.text
 
-        # Check if any input is empty
-        if not departing or not arriving or selected_option == "":
-            self.ids.error_label.text = "All fields are required!"
-            return  # Stop function execution
+        # Initialize an empty string for error messages
+        error_messages = ""
 
+        # Check if Departing Airport is empty
+        if not departing:
+            error_messages += "Departing Airport is required!\n"
+
+        # Validate Departing Airport - Check if it's exactly 3 letters (no numbers)
+        if departing and not re.match("^[A-Za-z]{3}$", departing):
+            error_messages += "Departing Airport must be 3 letters (no numbers)!\n"
+
+        # Check if Arriving Airport is empty
+        if not arriving:
+            error_messages += "Arriving Airport is required!\n"
+
+        # Validate Arriving Airport - Check if it's exactly 3 letters (no numbers)
+        if arriving and not re.match("^[A-Za-z]{3}$", arriving):
+            error_messages += "Arriving Airport must be 3 letters (no numbers)!\n"
+        
+        # Check if Departing and Arriving Airports are the same
+        if departing == arriving:
+            error_messages += "Departing and Arriving Airports must be different!\n"
+
+        # If there are any error messages, display them
+        if error_messages:
+            self.ids.error_label.text = error_messages
+            return 
+        
         # Store values in ScreenManager
         self.manager.departing = departing
         self.manager.arriving = arriving
