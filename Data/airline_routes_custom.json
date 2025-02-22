@@ -10,22 +10,22 @@
 		"longtitude": "-145.50913",
 		"timezone": "Asia/Singapore",
 		"routes": [
-		{
-			"airport_code": "SIN",
-			"distance": 76,
-			"duration": 20,
-			"weather_condition": "Fine",
-			"airlines": [
 			{
-				"airline_code": "SQ",
-				"airline_name": "Singapore Airlines"
-			},
-			{
-				"airline_code": "TA",
-				"airline_name": "Test Airlines"
+				"airport_code": "SIN",
+				"distance": 76,
+				"duration": 20,
+				"weather_condition": "Fine",
+				"airlines": [
+					{
+						"airline_code": "SQ",
+						"airline_name": "Singapore Airlines"
+					},
+					{
+						"airline_code": "TA",
+						"airline_name": "Test Airlines"
+					}
+				]
 			}
-			]
-		}
 		]
 	},
 	"SIN": {
@@ -38,43 +38,43 @@
 		"latitude": "1.361173",
 		"longtitude": "103.990201",
 		"timezone": "Asia/Singapore",
-		"routes":[
-		{
-			"airport_code": "TCA",
-			"distance": 76,
-			"duration": 20,
-			"weather_condition": "Fine",
-			"airlines": [
+		"routes": [
 			{
-				"airline_code": "SQ",
-				"airline_name": "Singapore Airlines"
+				"airport_code": "TCA",
+				"distance": 76,
+				"duration": 20,
+				"weather_condition": "Fine",
+				"airlines": [
+					{
+						"airline_code": "SQ",
+						"airline_name": "Singapore Airlines"
+					},
+					{
+						"airline_code": "TA",
+						"airline_name": "Test Airlines"
+					}
+				]
 			},
 			{
-				"airline_code": "TA",
-				"airline_name": "Test Airlines"
+				"airport_code": "JHB",
+				"distance": 32,
+				"duration": 10,
+				"weather_condition": "Thunderstorm",
+				"airlines": [
+					{
+						"airline_code": "SQ",
+						"airline_name": "Singapore Airlines"
+					},
+					{
+						"airline_code": "MH",
+						"airline_name": "Malaysia Airlines"
+					}
+				]
 			}
-			]
-		},
-		{
-			"airport_code": "JHB",
-			"distance": 32,
-			"duration": 10,
-			"weather_condition": "Thunderstorm",
-			"airlines": [
-			{
-				"airline_code": "SQ",
-				"airline_name": "Singapore Airlines"
-			},
-			{
-				"airline_code": "MH",
-				"airline_name": "Malaysia Airlines"
-			}
-			]
-		}
 		]
 	},
-	"JHB":{
-		"airport_code":"JHB",
+	"JHB": {
+		"airport_code": "JHB",
 		"airport_name": "Sultan Ismail",
 		"city_name": "Johor Bharu",
 		"country_code": "MY",
@@ -83,23 +83,367 @@
 		"latitude": "1.63668",
 		"longtitude": "103.667959",
 		"timezone": "Asia/Kuala_Lumpur",
-		"routes":[
-		{
-			"airport_code": "SIN",
-			"distance": 32,
-			"duration": 10,
-			"weather_condition": "Thunderstorm",
-			"airlines": [
+		"routes": [
 			{
-				"airline_code": "SQ",
-				"airline_name": "Singapore Airlines"
+				"airport_code": "SIN",
+				"distance": 32,
+				"duration": 10,
+				"weather_condition": "Thunderstorm",
+				"airlines": [
+					{
+						"airline_code": "SQ",
+						"airline_name": "Singapore Airlines"
+					},
+					{
+						"airline_code": "MH",
+						"airline_name": "Malaysia Airlines"
+					}
+				]
+			}
+		]
+	},
+	"KUL": {
+		"airport_code": "KUL",
+		"airport_name": "Kuala Lumpur International Airport",
+		"city_name": "Kuala Lumpur",
+		"country_code": "MY",
+		"country_name": "Malaysia",
+		"elevation": 70,
+		"latitude": "2.7456",
+		"longitude": "101.7092",
+		"timezone": "Asia/Kuala_Lumpur",
+		"routes": [
+			{
+				"airport_code": "SIN",
+				"distance": 299,
+				"duration": 60,
+				"weather_condition": "Fine",
+				"airlines": [
+					{
+						"airline_code": "MH",
+						"airline_name": "Malaysia Airlines"
+					},
+					{
+						"airline_code": "SQ",
+						"airline_name": "Singapore Airlines"
+					}
+				]
 			},
 			{
-				"airline_code": "MH",
-				"airline_name": "Malaysia Airlines"
+				"airport_code": "CGK",
+				"distance": 1128,
+				"duration": 120,
+				"weather_condition": "Thunderstorm",
+				"airlines": [
+					{
+						"airline_code": "MH",
+						"airline_name": "Malaysia Airlines"
+					},
+					{
+						"airline_code": "GA",
+						"airline_name": "Garuda Indonesia"
+					}
+				]
 			}
-			]
-		}
+		]
+	},
+	"BKK": {
+		"airport_code": "BKK",
+		"airport_name": "Suvarnabhumi Airport",
+		"city_name": "Bangkok",
+		"country_code": "TH",
+		"country_name": "Thailand",
+		"elevation": 5,
+		"latitude": "13.6890",
+		"longitude": "100.7501",
+		"timezone": "Asia/Bangkok",
+		"routes": [
+			{
+				"airport_code": "SIN",
+				"distance": 1435,
+				"duration": 125,
+				"weather_condition": "Heavy Rain",
+				"airlines": [
+					{
+						"airline_code": "TG",
+						"airline_name": "Thai Airways"
+					},
+					{
+						"airline_code": "SQ",
+						"airline_name": "Singapore Airlines"
+					}
+				]
+			},
+			{
+				"airport_code": "HKG",
+				"distance": 1680,
+				"duration": 150,
+				"weather_condition": "Fine",
+				"airlines": [
+					{
+						"airline_code": "TG",
+						"airline_name": "Thai Airways"
+					},
+					{
+						"airline_code": "CX",
+						"airline_name": "Cathay Pacific"
+					}
+				]
+			}
+		]
+	},
+	"CGK": {
+		"airport_code": "CGK",
+		"airport_name": "Soekarno-Hatta International Airport",
+		"city_name": "Jakarta",
+		"country_code": "ID",
+		"country_name": "Indonesia",
+		"elevation": 10,
+		"latitude": "-6.1256",
+		"longitude": "106.6559",
+		"timezone": "Asia/Jakarta",
+		"routes": [
+			{
+				"airport_code": "KUL",
+				"distance": 1128,
+				"duration": 120,
+				"weather_condition": "Thunderstorm",
+				"airlines": [
+					{
+						"airline_code": "GA",
+						"airline_name": "Garuda Indonesia"
+					},
+					{
+						"airline_code": "MH",
+						"airline_name": "Malaysia Airlines"
+					}
+				]
+			},
+			{
+				"airport_code": "DPS",
+				"distance": 983,
+				"duration": 110,
+				"weather_condition": "Fine",
+				"airlines": [
+					{
+						"airline_code": "GA",
+						"airline_name": "Garuda Indonesia"
+					},
+					{
+						"airline_code": "QZ",
+						"airline_name": "Indonesia AirAsia"
+					}
+				]
+			}
+		]
+	},
+	"HKG": {
+		"airport_code": "HKG",
+		"airport_name": "Hong Kong International Airport",
+		"city_name": "Hong Kong",
+		"country_code": "HK",
+		"country_name": "Hong Kong",
+		"elevation": 9,
+		"latitude": "22.3080",
+		"longitude": "113.9185",
+		"timezone": "Asia/Hong_Kong",
+		"routes": [
+			{
+				"airport_code": "BKK",
+				"distance": 1680,
+				"duration": 150,
+				"weather_condition": "Fine",
+				"airlines": [
+					{
+						"airline_code": "CX",
+						"airline_name": "Cathay Pacific"
+					},
+					{
+						"airline_code": "TG",
+						"airline_name": "Thai Airways"
+					}
+				]
+			},
+			{
+				"airport_code": "NRT",
+				"distance": 2960,
+				"duration": 240,
+				"weather_condition": "Heavy Snow",
+				"airlines": [
+					{
+						"airline_code": "CX",
+						"airline_name": "Cathay Pacific"
+					},
+					{
+						"airline_code": "JL",
+						"airline_name": "Japan Airlines"
+					}
+				]
+			}
+		]
+	},
+	"DPS": {
+		"airport_code": "DPS",
+		"airport_name": "Ngurah Rai International Airport",
+		"city_name": "Denpasar",
+		"country_code": "ID",
+		"country_name": "Indonesia",
+		"elevation": 14,
+		"latitude": "-8.7481",
+		"longtitude": "115.1675",
+		"timezone": "Asia/Makassar",
+		"routes": [
+			{
+				"airport_code": "CGK",
+				"distance": 983,
+				"duration": 110,
+				"weather_condition": "Fine",
+				"airlines": [
+					{
+						"airline_code": "GA",
+						"airline_name": "Garuda Indonesia"
+					},
+					{
+						"airline_code": "QZ",
+						"airline_name": "Indonesia AirAsia"
+					}
+				]
+			},
+			{
+				"airport_code": "SYD",
+				"distance": 4600,
+				"duration": 360,
+				"weather_condition": "Heavy Rain",
+				"airlines": [
+					{
+						"airline_code": "QF",
+						"airline_name": "Qantas"
+					},
+					{
+						"airline_code": "VA",
+						"airline_name": "Virgin Australia"
+					}
+				]
+			}
+		]
+	},
+	"NRT": {
+		"airport_code": "NRT",
+		"airport_name": "Narita International Airport",
+		"city_name": "Tokyo",
+		"country_code": "JP",
+		"country_name": "Japan",
+		"elevation": 141,
+		"latitude": "35.7719",
+		"longtitude": "140.3929",
+		"timezone": "Asia/Tokyo",
+		"routes": [
+			{
+				"airport_code": "LAX",
+				"distance": 8770,
+				"duration": 660,
+				"weather_condition": "Fine",
+				"airlines": [
+					{
+						"airline_code": "NH",
+						"airline_name": "All Nippon Airways"
+					},
+					{
+						"airline_code": "JL",
+						"airline_name": "Japan Airlines"
+					}
+				]
+			},
+			{
+				"airport_code": "SIN",
+				"distance": 5340,
+				"duration": 420,
+				"weather_condition": "Thunderstorm",
+				"airlines": [
+					{
+						"airline_code": "SQ",
+						"airline_name": "Singapore Airlines"
+					},
+					{
+						"airline_code": "JL",
+						"airline_name": "Japan Airlines"
+					}
+				]
+			}
+		]
+	},
+	"SYD": {
+		"airport_code": "SYD",
+		"airport_name": "Sydney Kingsford Smith Airport",
+		"city_name": "Sydney",
+		"country_code": "AU",
+		"country_name": "Australia",
+		"elevation": 21,
+		"latitude": "-33.9399",
+		"longtitude": "151.1753",
+		"timezone": "Australia/Sydney",
+		"routes": [
+			{
+				"airport_code": "LAX",
+				"distance": 12051,
+				"duration": 900,
+				"weather_condition": "Fine",
+				"airlines": [
+					{
+						"airline_code": "QF",
+						"airline_name": "Qantas"
+					},
+					{
+						"airline_code": "UA",
+						"airline_name": "United Airlines"
+					}
+				]
+			},
+			{
+				"airport_code": "DPS",
+				"distance": 4600,
+				"duration": 360,
+				"weather_condition": "Heavy Rain",
+				"airlines": [
+					{
+						"airline_code": "QF",
+						"airline_name": "Qantas"
+					},
+					{
+						"airline_code": "VA",
+						"airline_name": "Virgin Australia"
+					}
+				]
+			}
+		]
+	},
+	"LAX": {
+		"airport_code": "LAX",
+		"airport_name": "Los Angeles International Airport",
+		"city_name": "Los Angeles",
+		"country_code": "US",
+		"country_name": "United States",
+		"elevation": 125,
+		"latitude": "33.9416",
+		"longtitude": "-118.4085",
+		"timezone": "America/Los_Angeles",
+		"routes": [
+			{
+				"airport_code": "NRT",
+				"distance": 8770,
+				"duration": 660,
+				"weather_condition": "Fine",
+				"airlines": [
+					{
+						"airline_code": "NH",
+						"airline_name": "All Nippon Airways"
+					},
+					{
+						"airline_code": "JL",
+						"airline_name": "Japan Airlines"
+					}
+				]
+			}
 		]
 	}
 }
