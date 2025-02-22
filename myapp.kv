@@ -83,11 +83,12 @@ ScreenManager:
 
 <SecondScreen>:
     name: "second"
+    map_view: map_view  
 
     BoxLayout:
         orientation: "vertical"
-        size_hint: 1, 1
         padding: 10
+        spacing: 10
 
         Button:
             text: "Back"
@@ -101,3 +102,8 @@ ScreenManager:
             font_size: 20
             size_hint_y: None
             height: 50
+        
+        MapView:
+            id: map_view
+            zoom: 5
+            size_hint: 1, 1
