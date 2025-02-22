@@ -1,24 +1,51 @@
 from kivy.app import App
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.dropdown import DropDown
+from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 
-class MyLayout(BoxLayout):
-    def on_button_press(self):
-        input1 = self.ids.text_input1.text  # Get first input
-        input2 = self.ids.text_input2.text  # Get second input
-        selected_value = self.ids.dropdown.text  # Get the selected dropdown value
+class FirstScreen(Screen):
+    def on_submit(self):
+        departing = self.ids.text_input1.text.strip()
+        arriving = self.ids.text_input2.text.strip()
+        selected_option = self.ids.dropdown.text
 
-        print(f'Input 1: {input1}')  # Print first input
-        print(f'Input 2: {input2}')  # Print second input
-        print(f"Selected: {selected_value}")  # Print selected dropdown value
+        # Check if any input is empty
+        if not departing or not arriving or selected_option == "":
+            self.ids.error_label.text = "All fields are required!"
+            return  # Stop function execution
 
-        # Example manipulation (concatenation)
-        combined = f"{input1} {input2}"
-        print(f'Combined: {combined}')  # Print combined text
+        # Store values in ScreenManager
+        self.manager.departing = departing
+        self.manager.arriving = arriving
+        self.manager.selected_option = selected_option
+
+        # Print values in terminal
+        print(f"Departing Airport: {departing}")
+        print(f"Arriving Airport: {arriving}")
+        print(f"Selected Option: {selected_option}")
+
+        # Clear error message
+        self.ids.error_label.text = ""
+
+        # Clear inputs before switching
+        self.ids.text_input1.text = ""
+        self.ids.text_input2.text = ""
+        self.ids.dropdown.text = "nil"
+
+        # Switch to second screen
+        self.manager.transition = SlideTransition(direction="left")
+        self.manager.current = "second"
+
+class SecondScreen(Screen):
+    def on_back(self):
+        # Switch back to first screen
+        self.manager.transition = SlideTransition(direction="right")
+        self.manager.current = "first"
 
 class MyApp(App):
     def build(self):
-        return MyLayout()
+        sm = ScreenManager()
+        sm.add_widget(FirstScreen(name="first"))
+        sm.add_widget(SecondScreen(name="second"))
+        return sm
 
 if __name__ == '__main__':
     MyApp().run()
