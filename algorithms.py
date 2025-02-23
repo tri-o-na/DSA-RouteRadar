@@ -39,8 +39,8 @@ def get_valid_airline(prompt, airline_names):
 
         print("Invalid airline! Please enter a valid airline code or name.")
 
-def getWeatherCondition(route_data):
-    print(f"Weather Condition: {route_data['weather_condition']}")
+def getWeatherCondition(route_data, shortest_distance):
+    # print(f"Weather Condition: {route_data['weather_condition']}")
     routeDelayMultiplier = 1
 
     match route_data['weather_condition']:
@@ -50,11 +50,13 @@ def getWeatherCondition(route_data):
         case "Heavy Rain" | "Heavy Snow":
             print("Expect delay to the flight time")
             routeDelayMultiplier = 1.5
-        case "Thunderstorm" | "Snowstorm" :
+        case "Thunderstorm" | "Snowstorm":
             print("Expect flight cancellations")
-            routeDelayMultiplier = 0 # Return 0 to represent the flight being cancelled. To Update for any changes
-        
-    return routeDelayMultiplier
+            return "CANCELLED"  # Directly return a cancellation message
+
+    # Calculate adjusted distance
+    weather_delay_distance = shortest_distance * routeDelayMultiplier
+    return weather_delay_distance
 
 def getPriceEstimate(shortest_distance, airline):
     """Calculate the estimated flight price based on airline and distance."""
@@ -118,11 +120,20 @@ def findShortestPath():
     if shortest_distance == 0:
         return print("Origin and destination are the same airport.")
     
+    route_data = {"weather_condition": "Heavy Rain"}  # Replace with real API data if available
+    
+    weather_adjusted_distance = getWeatherCondition(route_data, shortest_distance)
+    #  Check if the flight is cancelled
+    if weather_adjusted_distance == "CANCELLED":
+        print(f"Flight from {origin} to {destination} has been **CANCELLED** due to {route_data['weather_condition']}.")
+        return  # Stop further processing
+
+    # Proceed with price estimation if not cancelled
     # Get the price estimate
-    price_estimate = getPriceEstimate(shortest_distance, selected_airline)
+    price_estimate = getPriceEstimate(weather_adjusted_distance, selected_airline)
 
     # Print the result
-    print(f"\nShortest distance from {origin} to {destination}: {shortest_distance} km" 
+    print(f"\nShortest distance from {origin} to {destination}: {weather_adjusted_distance} km" 
           if shortest_distance != float('inf') else 
           f"\nNo available route from {origin} to {destination}.")
     print(f"Price Estimate: ${price_estimate}")
