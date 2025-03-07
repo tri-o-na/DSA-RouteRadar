@@ -14,7 +14,7 @@
 				"airport_code": "SIN",
 				"distance": 76,
 				"duration": 20,
-				"weather_condition": "Fine",
+				"base_price": 107,
 				"airlines": [
 					{
 						"airline_code": "SQ",
@@ -43,7 +43,7 @@
 				"airport_code": "TCA",
 				"distance": 76,
 				"duration": 20,
-				"weather_condition": "Fine",
+				"base_price": 107,
 				"airlines": [
 					{
 						"airline_code": "SQ",
@@ -59,7 +59,7 @@
 				"airport_code": "JHB",
 				"distance": 32,
 				"duration": 10,
-				"weather_condition": "Thunderstorm",
+				"base_price": 103,
 				"airlines": [
 					{
 						"airline_code": "SQ",
@@ -88,7 +88,7 @@
 				"airport_code": "SIN",
 				"distance": 32,
 				"duration": 10,
-				"weather_condition": "Thunderstorm",
+				"base_price": 103,
 				"airlines": [
 					{
 						"airline_code": "SQ",
@@ -117,7 +117,7 @@
 				"airport_code": "SIN",
 				"distance": 299,
 				"duration": 60,
-				"weather_condition": "Fine",
+				"base_price": 129,
 				"airlines": [
 					{
 						"airline_code": "MH",
@@ -133,7 +133,7 @@
 				"airport_code": "CGK",
 				"distance": 1128,
 				"duration": 120,
-				"weather_condition": "Thunderstorm",
+				"base_price": 212,
 				"airlines": [
 					{
 						"airline_code": "MH",
@@ -162,7 +162,7 @@
 				"airport_code": "SIN",
 				"distance": 1435,
 				"duration": 125,
-				"weather_condition": "Heavy Rain",
+				"base_price": 243,
 				"airlines": [
 					{
 						"airline_code": "TG",
@@ -178,7 +178,7 @@
 				"airport_code": "HKG",
 				"distance": 1680,
 				"duration": 150,
-				"weather_condition": "Fine",
+				"base_price": 268,
 				"airlines": [
 					{
 						"airline_code": "TG",
@@ -207,7 +207,7 @@
 				"airport_code": "KUL",
 				"distance": 1128,
 				"duration": 120,
-				"weather_condition": "Thunderstorm",
+				"base_price": 212,
 				"airlines": [
 					{
 						"airline_code": "GA",
@@ -223,7 +223,7 @@
 				"airport_code": "DPS",
 				"distance": 983,
 				"duration": 110,
-				"weather_condition": "Fine",
+				"base_price": 198,
 				"airlines": [
 					{
 						"airline_code": "GA",
@@ -252,7 +252,7 @@
 				"airport_code": "BKK",
 				"distance": 1680,
 				"duration": 150,
-				"weather_condition": "Fine",
+				"base_price": 268,
 				"airlines": [
 					{
 						"airline_code": "CX",
@@ -268,7 +268,7 @@
 				"airport_code": "NRT",
 				"distance": 2960,
 				"duration": 240,
-				"weather_condition": "Heavy Snow",
+				"base_price": 396,
 				"airlines": [
 					{
 						"airline_code": "CX",
@@ -297,7 +297,7 @@
 				"airport_code": "CGK",
 				"distance": 983,
 				"duration": 110,
-				"weather_condition": "Fine",
+				"base_price": 198,
 				"airlines": [
 					{
 						"airline_code": "GA",
@@ -313,7 +313,7 @@
 				"airport_code": "SYD",
 				"distance": 4600,
 				"duration": 360,
-				"weather_condition": "Heavy Rain",
+				"base_price": 560,
 				"airlines": [
 					{
 						"airline_code": "QF",
@@ -342,7 +342,7 @@
 				"airport_code": "LAX",
 				"distance": 8770,
 				"duration": 660,
-				"weather_condition": "Fine",
+				"base_price": 977,
 				"airlines": [
 					{
 						"airline_code": "NH",
@@ -358,7 +358,7 @@
 				"airport_code": "SIN",
 				"distance": 5340,
 				"duration": 420,
-				"weather_condition": "Thunderstorm",
+				"base_price": 634,
 				"airlines": [
 					{
 						"airline_code": "SQ",
@@ -387,7 +387,7 @@
 				"airport_code": "LAX",
 				"distance": 12051,
 				"duration": 900,
-				"weather_condition": "Fine",
+				"base_price": 1305,
 				"airlines": [
 					{
 						"airline_code": "QF",
@@ -403,7 +403,7 @@
 				"airport_code": "DPS",
 				"distance": 4600,
 				"duration": 360,
-				"weather_condition": "Heavy Rain",
+				"base_price": 560,
 				"airlines": [
 					{
 						"airline_code": "QF",
@@ -432,7 +432,7 @@
 				"airport_code": "NRT",
 				"distance": 8770,
 				"duration": 660,
-				"weather_condition": "Fine",
+				"base_price": 977,
 				"airlines": [
 					{
 						"airline_code": "NH",
