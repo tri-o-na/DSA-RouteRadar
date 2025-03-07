@@ -1,7 +1,15 @@
+import json
 import numpy as np
 import pandas as pd
 
-def InitAdjacencyMatrix(data):  # Accepts `data` as an argument
+# Step 1: Load the JSON data
+file_path = 'Data/airline_routes_custom.json'  #Check if the path is correct
+with open(file_path) as file:
+    data = json.load(file)
+
+# Define the InitAdjacencyMatrix function
+def InitAdjacencyMatrix(data):  
+    
     # Step 1: Get all unique airport codes
     airport_codes = sorted(data.keys())  # Sort for consistent ordering
     num_airports = len(airport_codes)
@@ -38,7 +46,7 @@ def InitAdjacencyMatrix(data):  # Accepts `data` as an argument
     df = pd.DataFrame(adj_matrix, index=airport_codes, columns=airport_codes)
     return df, airport_codes
 
-# Call the function using the `data` variable from Colab
+# Call the function using the `data` variable loaded from the JSON file
 df, airport_codes = InitAdjacencyMatrix(data)
 
 # Print result (optional)
