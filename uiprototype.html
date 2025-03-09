@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Route Finder</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f4f4f4;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 5px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border: none;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .route {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            text-align: left;
+        }
+        .weather-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .good-weather { background-color: green; }
+        .moderate-weather { background-color: yellow; }
+        .bad-weather { background-color: red; }
+        #map {
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="page1" class="container">
+        <h2>Find Your Flight Route</h2>
+        <input type="text" id="startAirport" placeholder="Starting Airport" value="JFK">
+        <input type="text" id="destAirport" placeholder="Destination Airport" value="LAX">
+        <input type="date">
+        <button onclick="showPage2()">Find Routes</button>
+    </div>
+
+    <div id="page2" class="container" style="display: none;">
+        <h2>Available Routes</h2>
+        
+        <label>Filter by Airline:</label>
+        <select id="airlineFilter" onchange="filterRoutes()">
+            <option value="all">All Airlines</option>
+            <option value="Singapore Airlines">Singapore Airlines</option>
+            <option value="Lufthansa">Lufthansa</option>
+            <option value="Emirates">Emirates</option>
+        </select>
+
+        <label>Filter by Cost Range:</label>
+        <select id="costFilter" onchange="filterRoutes()">
+            <option value="all">All Costs</option>
+            <option value="0-300">Up to $300</option>
+            <option value="300-500">$300 - $500</option>
+            <option value="500+">Above $500</option>
+        </select>
+
+        <div id="route-list"></div>
+
+        <h3>Map Preview</h3>
+        <div id="map"></div>
+    </div>
+
+    <script>
+        const flightRoutes = [
+            { airline: "Singapore Airlines", distance: 10, duration: 10, cost: 350, weather: "good", start: "JFK", dest: "LAX" },
+            { airline: "Lufthansa", distance: 11, duration: 12, cost: 240, weather: "moderate", start: "JFK", dest: "LAX" },
+            { airline: "Emirates", distance: 9, duration: 9, cost: 500, weather: "bad", start: "JFK", dest: "LAX" },
+            { airline: "Singapore Airlines", distance: 8, duration: 8, cost: 280, weather: "good", start: "JFK", dest: "LAX" }
+        ];
+
+        function showPage2() {
+            document.getElementById('page1').style.display = 'none';
+            document.getElementById('page2').style.display = 'block';
+            displayRoutes(flightRoutes);
+        }
+
+        function displayRoutes(routes) {
+            const routeList = document.getElementById('route-list');
+            routeList.innerHTML = "";
+
+            routes.forEach(route => {
+                let weatherClass = route.weather === "good" ? "good-weather" :
+                                   route.weather === "moderate" ? "moderate-weather" : "bad-weather";
+
+                let routeElement = document.createElement("div");
+                routeElement.classList.add("route");
+                routeElement.innerHTML = `
+                    <strong>${route.start} → ${route.dest} (${route.airline})</strong><br>
+                    Distance: ${route.distance} km | Duration: ${route.duration} hours | Cost: $${route.cost}
+                    <span class="weather-icon ${weatherClass}"></span>
+                `;
+                routeElement.onclick = () => showMap(route.start, route.dest);
+                routeList.appendChild(routeElement);
+            });
+        }
+
+        function filterRoutes() {
+            let selectedAirline = document.getElementById("airlineFilter").value;
+            let selectedCostRange = document.getElementById("costFilter").value;
+
+            let filteredRoutes = flightRoutes.filter(route => {
+                let matchesAirline = selectedAirline === "all" || route.airline === selectedAirline;
+                let matchesCost = 
+                    selectedCostRange === "all" ||
+                    (selectedCostRange === "0-300" && route.cost <= 300) ||
+                    (selectedCostRange === "300-500" && route.cost >= 300 && route.cost <= 500) ||
+                    (selectedCostRange === "500+" && route.cost > 500);
+
+                return matchesAirline && matchesCost;
+            });
+
+            displayRoutes(filteredRoutes);
+        }
+
+        function showMap(start, destination) {
+            const locations = {
+                'JFK': [40.6413, -73.7781],
+                'LAX': [33.9416, -118.4085]
+            };
+
+            document.getElementById('map').innerHTML = "";
+            const map = L.map('map').setView(locations[start], 4);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            const airplaneIcon = L.icon({
+                iconUrl: 'https://img.icons8.com/ios/50/airplane-mode-on--v1.png',
+                iconSize: [40, 40],
+                iconAnchor: [20, 20],
+                popupAnchor: [0, -20]
+            });
+
+            L.marker(locations[start]).addTo(map).bindPopup("Starting Airport").openPopup();
+            L.marker(locations[destination], { icon: airplaneIcon }).addTo(map).bindPopup("Destination Airport");
+
+            L.polyline([locations[start], locations[destination]], { color: 'red' }).addTo(map);
+        }
+    </script>
+</body>
+</html>
