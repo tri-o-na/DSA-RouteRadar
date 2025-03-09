@@ -36,9 +36,11 @@ def InitAdjacencyMatrix(data):
                 airline_code = airline["airline_code"]
                 airline_name = airline["airline_name"]
                 duration = route["duration"]
-
-                route_info.append((airline_code, airline_name, duration))
-
+                distance = route["distance"]
+                base_price = route["base_price"]
+                
+                route_info.append((airline_code, airline_name, duration, distance, base_price))
+                
             # Store the route information in the matrix
             adj_matrix[src_idx][dest_idx] = route_info
 
