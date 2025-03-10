@@ -209,9 +209,6 @@ def getShortestDistance(origin, destination, airport_codes, df):
             print("No layover routes found.")
             return None
     
-    if layover_routes is None:
-        return None
-    
     else:
         # Display available airlines for the selected route
         print(f"\nAvailable airlines from {origin} to {destination}:")
