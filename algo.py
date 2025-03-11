@@ -3,6 +3,9 @@ import numpy as np
 import pandas as pd
 import json
 import sys
+from datetime import datetime, timedelta
+# import holidays
+
 
 """
 Main Algo
@@ -23,6 +26,11 @@ with open(file_path) as file:
 def mainAlgo(data):
     df, airport_codes = InitAdjacencyMatrix(data)
     printAllAirport(airport_codes)
+
+
+    valid_date, isHoliday = checkDate()
+    print(f"Validated date: {valid_date.strftime('%d/%m/%Y')}")
+    print(f"Date a holiday or festive season? {'Yes' if isHoliday else 'No'}")
 
     # Get user input for origin and destination
     origin = input("\nEnter the origin airport code: ").strip().upper()
@@ -68,8 +76,38 @@ def checkAirportCode(airport_code, airport_codes):
         print("Invalid airport code. Please check the airport codes and try again.")
         sys.exit()
 
-def checkDate(userInput): # (user input --> 1 year or less, String to DATE input, return date)
-    print()
+
+holiday_months = {12, 1, 6}  # December and January (New Year), June
+specific_holidays = {
+    "25/12", "31/10", "14/02",  # Christmas, Halloween, Valentine's
+    "01/01", "19/02",  # New Year's Day, CNY
+    "04/07", "01/05", "04/05", "25/10",  # US Independence Day, Labour day, Buddha's Bday, China's republic day
+}
+
+def checkDate(): # (user input --> 1 year or less, String to DATE input, return date)
+    while True:
+        user_input = input("Enter a date (dd/mm/yyyy): ")
+        try:
+            input_date = datetime.strptime(user_input, "%d/%m/%Y")
+            one_year_ahead = datetime.now() + timedelta(days=365)
+
+            # Check date range validity
+            if not (datetime.now() < input_date <= one_year_ahead): 
+                print("Date must be within 1 year ahead from today.")
+                continue
+            # Check if the date falls in a holiday month
+            is_festive_month = input_date.month in holiday_months
+
+            # Check if the date is a public holiday
+            is_public_holiday = input_date.strftime("%d/%m") in specific_holidays
+
+            # Determine if the date is considered a holiday
+            isHoliday = is_festive_month or is_public_holiday
+
+            return input_date, isHoliday  # Returning both the date and the boolean
+
+        except ValueError:
+            print("Invalid date format. Please enter in dd/mm/yyyy.")
 
 # =========================================================================================================
 
