@@ -9,6 +9,10 @@ with open(file_path) as file:
 
 
 def find_routes_with_layovers(data, num_layovers):
+    """
+    Finds routes with 0, 1, or 2 layovers using the same airline.
+    Returns a list of valid routes.
+    """
     routes_with_layovers = []
 
     for airport_code, airport_info in data.items():
@@ -16,16 +20,22 @@ def find_routes_with_layovers(data, num_layovers):
             first_leg_dest = route['airport_code']
             first_leg_airlines = {airline['airline_code']: airline['airline_name'] for airline in route['airlines']}
 
-            # Ensure start and end are different
+            # ✅ Direct Flights (No Layovers)
+            if num_layovers == 0:
+                routes_with_layovers.append((airport_code, first_leg_dest, first_leg_airlines))
+                continue  # Skip to next route
+
+            # 🔹 Ensure start and end are different
             if first_leg_dest == airport_code:
                 continue
 
-            if num_layovers == 1:  # 1 layover means 2 legs
+            # ✅ 1 Layover (2 Legs)
+            if num_layovers == 1:
                 for second_route in data[first_leg_dest]['routes']:
                     second_leg_dest = second_route['airport_code']
                     
-                    # Ensure second leg destination is different from first and start
-                    if second_leg_dest == airport_code or second_leg_dest == first_leg_dest:
+                    # Prevent cycles
+                    if second_leg_dest in {airport_code, first_leg_dest}:
                         continue
                     
                     second_leg_airlines = {airline['airline_code']: airline['airline_name'] for airline in second_route['airlines']}
@@ -35,11 +45,13 @@ def find_routes_with_layovers(data, num_layovers):
                     if common_airlines:
                         routes_with_layovers.append((airport_code, first_leg_dest, second_leg_dest, common_airlines))
 
-            elif num_layovers == 2:  # 2 layovers means 3 legs
+            # ✅ 2 Layovers (3 Legs)
+            elif num_layovers == 2:
                 for second_route in data[first_leg_dest]['routes']:
                     second_leg_dest = second_route['airport_code']
                     
-                    if second_leg_dest == airport_code or second_leg_dest == first_leg_dest:
+                    # Prevent cycles
+                    if second_leg_dest in {airport_code, first_leg_dest}:
                         continue
                     
                     second_leg_airlines = {airline['airline_code']: airline['airline_name'] for airline in second_route['airlines']}
@@ -49,8 +61,8 @@ def find_routes_with_layovers(data, num_layovers):
                         for third_route in data[second_leg_dest]['routes']:
                             third_leg_dest = third_route['airport_code']
                             
-                            # Ensure third leg destination is different
-                            if third_leg_dest == airport_code or third_leg_dest == first_leg_dest or third_leg_dest == second_leg_dest:
+                            # Prevent cycles
+                            if third_leg_dest in {airport_code, first_leg_dest, second_leg_dest}:
                                 continue
                             
                             third_leg_airlines = {airline['airline_code']: airline['airline_name'] for airline in third_route['airlines']}
@@ -61,17 +73,23 @@ def find_routes_with_layovers(data, num_layovers):
 
     return routes_with_layovers
 
-# Get routes with 1 layover (2 legs)
-one_layover_routes = find_routes_with_layovers(data, 1)
-print("Routes with 1 Layover (2 Legs):")
-for route in one_layover_routes:
-    print(route)
+# ✅ Get direct flights (0 layovers)
+direct_routes = find_routes_with_layovers(data, 0)
+print("Direct Flights (No Layovers):")
+for route in direct_routes:
+    print(f"{route[0]} -> {route[1]} (Airlines: {', '.join(route[2].keys())})")
 
-# Get routes with 2 layovers (3 legs)
+# ✅ Get routes with 1 layover (2 legs)
+one_layover_routes = find_routes_with_layovers(data, 1)
+print("\nRoutes with 1 Layover (2 Legs):")
+for route in one_layover_routes:
+    print(f"{route[0]} -> {route[1]} -> {route[2]} (Airlines: {', '.join(route[3])})")
+
+# ✅ Get routes with 2 layovers (3 legs)
 two_layover_routes = find_routes_with_layovers(data, 2)
 print("\nRoutes with 2 Layovers (3 Legs):")
 for route in two_layover_routes:
-    print(route)
+    print(f"{route[0]} -> {route[1]} -> {route[2]} -> {route[3]} (Airlines: {', '.join(route[4])})")
 
-# No routes with 3 layovers (4 legs) given the current data
+# ✅ No routes with 3 layovers (4 legs) given the current data
 print("\nRoutes with 3 Layovers (4 Legs): None")
