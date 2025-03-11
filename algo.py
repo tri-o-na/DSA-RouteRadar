@@ -4,7 +4,6 @@ import pandas as pd
 import json
 import sys
 from datetime import datetime, timedelta
-# import holidays
 
 
 """
@@ -28,9 +27,10 @@ def mainAlgo(data):
     printAllAirport(airport_codes)
 
 
-    valid_date, isHoliday = checkDate()
-    print(f"Validated date: {valid_date.strftime('%d/%m/%Y')}")
+    valid_booking_date, isHoliday, is_within_one_month = checkDate()
+    print(f"Validated booking date: {valid_booking_date.strftime('%d/%m/%Y')}")
     print(f"Date a holiday or festive season? {'Yes' if isHoliday else 'No'}")
+    print(f"Is this date within one month? {'Yes' if is_within_one_month else 'No'}")
 
     # Get user input for origin and destination
     origin = input("\nEnter the origin airport code: ").strip().upper()
@@ -77,7 +77,7 @@ def checkAirportCode(airport_code, airport_codes):
         sys.exit()
 
 
-holiday_months = {12, 1, 6}  # December and January (New Year), June
+holiday_months = {1, 3, 6, 12}  #jan, march, june, dec
 specific_holidays = {
     "25/12", "31/10", "14/02",  # Christmas, Halloween, Valentine's
     "01/01", "19/02",  # New Year's Day, CNY
@@ -89,12 +89,17 @@ def checkDate(): # (user input --> 1 year or less, String to DATE input, return 
         user_input = input("Enter a date (dd/mm/yyyy): ")
         try:
             input_date = datetime.strptime(user_input, "%d/%m/%Y")
-            one_year_ahead = datetime.now() + timedelta(days=365)
+            today = datetime.now().date()
+            one_year_ahead = today + timedelta(days=365)
+            one_month_ahead = today + timedelta(days=30)
 
             # Check date range validity
-            if not (datetime.now() < input_date <= one_year_ahead): 
+            if not (today <= input_date.date() <= one_year_ahead): 
                 print("Date must be within 1 year ahead from today.")
                 continue
+            # Check if the date falls within the next 1 month
+            is_within_one_month = input_date <= one_month_ahead
+
             # Check if the date falls in a holiday month
             is_festive_month = input_date.month in holiday_months
 
@@ -104,7 +109,7 @@ def checkDate(): # (user input --> 1 year or less, String to DATE input, return 
             # Determine if the date is considered a holiday
             isHoliday = is_festive_month or is_public_holiday
 
-            return input_date, isHoliday  # Returning both the date and the boolean
+            return input_date, isHoliday, is_within_one_month # Returning the date and booleans
 
         except ValueError:
             print("Invalid date format. Please enter in dd/mm/yyyy.")
@@ -113,13 +118,18 @@ def checkDate(): # (user input --> 1 year or less, String to DATE input, return 
 
 """ ==================  calculation functions  ========================================= """
 
-def costSpike(): #calls checkDate, current date -- time to booking date --> if < 1 month OR holiday season: price increase
-    print()
+def costSpike(isHoliday, is_within_one_month): # if < 1 month OR holiday season: price increase
+    spike = 0
+    if isHoliday == True:
+        spike += 0.1
+    if is_within_one_month == True:
+        spike += 0.05
+    return spike
 
-def getPriceEstimate(): # get price & costSpike()
-    print()
+def getPriceEstimate(basePrice, costSpike): # get price & costSpike()
+    return basePrice * costSpike
 
-def layover(origin, destination, airport_codes, df, max_layovers=4):
+def layover(origin, destination, airport_codes, df, max_layovers=2):
     """
     Finds layover routes with the same airline and calculates total distance, duration, and price.
     Supports up to 3 layovers (4 segments in total).
@@ -188,8 +198,6 @@ def layover(origin, destination, airport_codes, df, max_layovers=4):
         for i, route in enumerate(layover_routes):
             print(f"{i + 1}. {route['airline_name']} ({route['airline_code']}) - Route: {' -> '.join(route['route'])}")
             print(f"   Total Distance: {route['total_distance']} km")
-            print(f"   Total Duration: {route['total_duration']} minutes")
-            print(f"   Total Price: ${route['total_price']:.2f}")
         
         if len(layover_routes) == 1:
             return layover_routes[0]
