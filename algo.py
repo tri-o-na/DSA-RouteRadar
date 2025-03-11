@@ -27,17 +27,17 @@ def mainAlgo(data):
     printAllAirport(airport_codes)
 
 
-    # valid_booking_date, isHoliday, is_within_one_month = checkDate()
-    # print(f"Validated booking date: {valid_booking_date.strftime('%d/%m/%Y')}")
-    # print(f"Date a holiday or festive season? {'Yes' if isHoliday else 'No'}")
-    # print(f"Is this date within one month? {'Yes' if is_within_one_month else 'No'}")
+    valid_booking_date, isHoliday, is_within_one_month = checkDate()
+    print(f"Validated booking date: {valid_booking_date.strftime('%d/%m/%Y')}")
+    print(f"Date a holiday or festive season? {'Yes' if isHoliday else 'No'}")
+    print(f"Is this date within one month? {'Yes' if is_within_one_month else 'No'}")
 
     # Get user input for origin and destination
     origin = input("\nEnter the origin airport code: ").strip().upper()
     origin = checkAirportCode(origin, airport_codes)
     destination = input("Enter the destination airport code: ").strip().upper()
     destination = checkAirportCode(destination, airport_codes)
-    selected_route = getShortestDistance(origin, destination, airport_codes, df)
+    selected_route = getShortestDistance(origin, destination, airport_codes, df, isHoliday, is_within_one_month)
 
     if selected_route:
         if selected_route['type'] == "layover":  # Layover route
@@ -98,7 +98,7 @@ def checkDate(): # (user input --> 1 year or less, String to DATE input, return 
                 print("Date must be within 1 year ahead from today.")
                 continue
             # Check if the date falls within the next 1 month
-            is_within_one_month = input_date <= one_month_ahead
+            is_within_one_month = input_date.date() <= one_month_ahead
 
             # Check if the date falls in a holiday month
             is_festive_month = input_date.month in holiday_months
@@ -226,7 +226,7 @@ def selectAirline(route_info): #Get user input for airline selection
         print("Invalid input. Please enter a number.")
         return
 
-def getShortestDistance(origin, destination, airport_codes, df):
+def getShortestDistance(origin, destination, airport_codes, df, isHoliday, is_within_one_month):
     """
     Finds the shortest distance route between two airports and returns the selected route information.
     Combines direct and layover routes into a single list, sorted by total distance.
@@ -309,14 +309,12 @@ def getShortestDistance(origin, destination, airport_codes, df):
         print("Invalid input. Please enter a number.")
         return None
     
-    # SHYANN: change price of selected route based on costSpike
-    # selected_route = all_routes[route_choice - 1]
-    # if selected_route['type'] == "direct":
-    #     selected_route['price'] = getPriceEstimate(selected_route['price'], costSpike(isHoliday, is_within_one_month))
-    # else:
-    #     selected_route['total_price'] = getPriceEstimate(selected_route['total_price'], costSpike(isHoliday, is_within_one_month))
+    selected_route = all_routes[route_choice - 1]
+    if selected_route['type'] == "direct":
+        selected_route['price'] = getPriceEstimate(selected_route['price'], costSpike(isHoliday, is_within_one_month))
+    else:
+        selected_route['total_price'] = getPriceEstimate(selected_route['total_price'], costSpike(isHoliday, is_within_one_month))
 
-    # Return the selected route
     return all_routes[route_choice - 1]
 
 # =========================================================================================================
