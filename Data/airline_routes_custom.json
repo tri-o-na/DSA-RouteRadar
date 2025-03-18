@@ -1,33 +1,4 @@
 {
-	"TCA": {
-		"airport_code": "TCA",
-		"airport_name": "Test City Airport",
-		"city_name": "Test City",
-		"country_code": "TCS",
-		"country_name": "Test City State",
-		"elevation": 23,
-		"latitude": "-17.355648",
-		"longtitude": "-145.50913",
-		"timezone": "Asia/Singapore",
-		"routes": [
-			{
-				"airport_code": "SIN",
-				"distance": 76,
-				"duration": 20,
-				"base_price": 107,
-				"airlines": [
-					{
-						"airline_code": "SQ",
-						"airline_name": "Singapore Airlines"
-					},
-					{
-						"airline_code": "TA",
-						"airline_name": "Test Airlines"
-					}
-				]
-			}
-		]
-	},
 	"SIN": {
 		"airport_code": "SIN",
 		"airport_name": "Singapore Changi Airport",
@@ -36,25 +7,9 @@
 		"country_name": "Singapore",
 		"elevation": 22,
 		"latitude": "1.361173",
-		"longtitude": "103.990201",
+		"longitude": "103.990201",
 		"timezone": "Asia/Singapore",
 		"routes": [
-			{
-				"airport_code": "TCA",
-				"distance": 76,
-				"duration": 20,
-				"base_price": 107,
-				"airlines": [
-					{
-						"airline_code": "SQ",
-						"airline_name": "Singapore Airlines"
-					},
-					{
-						"airline_code": "TA",
-						"airline_name": "Test Airlines"
-					}
-				]
-			},
 			{
 				"airport_code": "JHB",
 				"distance": 32,
@@ -70,6 +25,34 @@
 						"airline_name": "Malaysia Airlines"
 					}
 				]
+			},
+			{
+				"airport_code": "BKK",
+				"distance": 1435,
+				"duration": 125,
+				"base_price": 243,
+				"airlines": [
+					{
+						"airline_code": "TG",
+						"airline_name": "Thai Airways"
+					},
+					{
+						"airline_code": "SQ",
+						"airline_name": "Singapore Airlines"
+					}
+				]
+			},
+			{
+				"airport_code": "HKG",
+				"distance": 3115,
+				"duration": 275,
+				"base_price": 411,
+				"airlines": [
+					{
+						"airline_code": "SQ",
+						"airline_name": "Singapore Airlines"
+					}
+				]
 			}
 		]
 	},
@@ -81,7 +64,7 @@
 		"country_name": "Malaysia",
 		"elevation": 135,
 		"latitude": "1.63668",
-		"longtitude": "103.667959",
+		"longitude": "103.667959",
 		"timezone": "Asia/Kuala_Lumpur",
 		"routes": [
 			{
@@ -279,6 +262,18 @@
 						"airline_name": "Japan Airlines"
 					}
 				]
+			},
+			{
+				"airport_code": "SIN",
+				"distance": 3115,
+				"duration": 275,
+				"base_price": 411,
+				"airlines": [
+					{
+						"airline_code": "SQ",
+						"airline_name": "Singapore Airlines"
+					}
+				]
 			}
 		]
 	},
@@ -290,7 +285,7 @@
 		"country_name": "Indonesia",
 		"elevation": 14,
 		"latitude": "-8.7481",
-		"longtitude": "115.1675",
+		"longitude": "115.1675",
 		"timezone": "Asia/Makassar",
 		"routes": [
 			{
@@ -335,7 +330,7 @@
 		"country_name": "Japan",
 		"elevation": 141,
 		"latitude": "35.7719",
-		"longtitude": "140.3929",
+		"longitude": "140.3929",
 		"timezone": "Asia/Tokyo",
 		"routes": [
 			{
@@ -380,7 +375,7 @@
 		"country_name": "Australia",
 		"elevation": 21,
 		"latitude": "-33.9399",
-		"longtitude": "151.1753",
+		"longitude": "151.1753",
 		"timezone": "Australia/Sydney",
 		"routes": [
 			{
@@ -425,7 +420,7 @@
 		"country_name": "United States",
 		"elevation": 125,
 		"latitude": "33.9416",
-		"longtitude": "-118.4085",
+		"longitude": "-118.4085",
 		"timezone": "America/Los_Angeles",
 		"routes": [
 			{
