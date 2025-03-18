@@ -284,7 +284,12 @@ def getShortestDistance(origin, destination, airport_codes, df, isHoliday, is_wi
     
     # Sort all routes by total distance (shortest first)
     all_routes.sort(key=lambda x: x.get("distance", x.get("total_distance", float('inf'))))
-    
+    for route in all_routes:
+        if route['type'] == "direct":
+            route['price'] = getPriceEstimate(route['price'], costSpike(isHoliday, is_within_one_month))
+        else:
+            route['total_price'] = getPriceEstimate(route['total_price'], costSpike(isHoliday, is_within_one_month))
+
     # Display all available routes
     print("\n All Available routes:")
     for i, route in enumerate(all_routes):
@@ -309,11 +314,11 @@ def getShortestDistance(origin, destination, airport_codes, df, isHoliday, is_wi
         print("Invalid input. Please enter a number.")
         return None
     
-    selected_route = all_routes[route_choice - 1]
-    if selected_route['type'] == "direct":
-        selected_route['price'] = getPriceEstimate(selected_route['price'], costSpike(isHoliday, is_within_one_month))
-    else:
-        selected_route['total_price'] = getPriceEstimate(selected_route['total_price'], costSpike(isHoliday, is_within_one_month))
+    # selected_route = all_routes[route_choice - 1]
+    # if selected_route['type'] == "direct":
+    #     selected_route['price'] = getPriceEstimate(selected_route['price'], costSpike(isHoliday, is_within_one_month))
+    # else:
+    #     selected_route['total_price'] = getPriceEstimate(selected_route['total_price'], costSpike(isHoliday, is_within_one_month))
 
     return all_routes[route_choice - 1]
 
