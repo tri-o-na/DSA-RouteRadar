@@ -119,7 +119,7 @@ def checkDate(): # (user input --> 1 year or less, String to DATE input, return 
 """ ==================  calculation functions  ========================================= """
 
 def costSpike(isHoliday, is_within_one_month): # if < 1 month OR holiday season: price increase
-    spike = 0
+    spike = 1
     if isHoliday == True:
         spike += 0.1
     if is_within_one_month == True:
@@ -195,7 +195,7 @@ def layover(origin, destination, airport_codes, df, max_layovers=2):
         print("\nAvailable layover routes:")
         for i, route in enumerate(layover_routes):
             print(f"{i + 1}. {route['airline_name']} ({route['airline_code']}) - Route: {' -> '.join(route['route'])}")
-            print(f"   Total Distance: {route['total_distance']} km")
+            print(f"Total Distance: {route['total_distance']} km")
         
         if len(layover_routes) == 1:
             return layover_routes  # Return as a list
