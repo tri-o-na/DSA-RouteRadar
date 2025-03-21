@@ -13,7 +13,7 @@ ScreenManager:
             orientation: 'vertical'
             spacing: 20
             size_hint: None, None
-            size: 400, 350  # Increased height for error message
+            size: 400, 400  # Increased height for error message
 
             BoxLayout:
                 orientation: 'horizontal'
@@ -50,19 +50,19 @@ ScreenManager:
                     size: 250, 40
 
             BoxLayout:
-                orientation: "horizontal"
+                orientation: 'horizontal'
                 size_hint: None, None
                 size: 400, 50
                 Label:
-                    text: "Cost:"
+                    text: "Flight Date:"
                     size_hint: None, None
                     size: 190, 40
                     halign: "left"
                     valign: "middle"
-                Spinner:
-                    id: dropdown
-                    text: "nil"
-                    values: ["nil", "0-500", "500-1000", "1000-2000"]
+                    text_size: self.size
+                TextInput:
+                    id: date_input
+                    hint_text: "DD/MM/YYYY"
                     size_hint: None, None
                     size: 250, 40
 
@@ -85,27 +85,84 @@ ScreenManager:
 
 <SecondScreen>:
     name: "second"
-    map_view: map_view  
-
+    
     BoxLayout:
-        orientation: "vertical"
+        orientation: 'vertical'
         padding: 10
         spacing: 10
+        size_hint: 1, 1
 
-        Button:
-            text: "Back"
-            size_hint: None, None
-            size: 100, 50
-            pos_hint: {"x": 0, "top": 1}
-            on_press: root.on_back()
-
-        Label:
-            text: "This is the second screen"
-            font_size: 20
+        # Filters Section (At the top of the screen)
+        BoxLayout:
+            orientation: 'horizontal'
             size_hint_y: None
-            height: 50
-        
-        MapView:
-            id: map_view
-            zoom: 5
-            size_hint: 1, 1
+            height: "60dp"  # Set a specific height for the filters section
+            spacing: 10
+
+            Label:
+                text: "Filters:"
+                size_hint_x: None
+                width: "50dp"
+
+            Spinner:
+                id: airline_filter
+                text: "Select Airline"
+                values: ["All", "American Airlines", "Delta", "United", "Southwest", "JetBlue"]
+                size_hint_x: None
+                width: "150dp"
+
+            Spinner:
+                id: cost_filter
+                text: "Select Cost"
+                values: ["All", "$100-$200", "$200-$300", "$300-$400", "$400+"]
+                size_hint_x: None
+                width: "150dp"
+
+            Spinner:
+                id: layover_filter
+                text: "Layovers"
+                values: ["All", "0", "1", "2"]
+                size_hint_x: None
+                width: "100dp"
+            
+            # Submit Button to apply filters
+            Button:
+                text: "Apply Filters"
+                size_hint: None, None
+                size: 150, 50
+                pos_hint: {"center_x": 0.5}
+                on_press: root.on_apply_filters()
+
+        # Routes and Map Section (Below filters)
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 10
+            size_hint_y: 1  # Allow it to take the remaining vertical space
+            padding: 10, 10, 10, 10  # Add padding around the routes and map section
+
+            # Routes List (Left side of the screen)
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_x: 0.4  # Left side for routes list
+                id: routes_box
+                height: "300dp"  # Set a specific height for the routes section
+                ScrollView:
+                    do_scroll_x: False
+                    do_scroll_y: True
+                    GridLayout:
+                        id: routes_grid
+                        cols: 1
+                        size_hint_y: None
+                        height: self.minimum_height  # Adjust height based on content
+                        padding: [0, 10, 0, 10]  # Padding for spacing between route buttons
+                        spacing: 10  # Spacing between route buttons
+
+            # Map Section (Right side of the screen)
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_x: 0.6  # Right side for map
+                MapView:
+                    id: map_view
+                    zoom: 5
+                    size_hint_x: 1  # Full width within the right section
+

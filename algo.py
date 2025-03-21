@@ -5,10 +5,9 @@ import json
 import sys
 from datetime import datetime, timedelta
 
-
 """
 Main Algo
-Funtions:
+Functions:
  - validity (airport code, airline route, user input)
  - getDate (user input --> 1 year or less, String to DATE input)
  - costSpike (check current date -- time to booking date --> if < 1 month OR holiday season: price increase)
@@ -17,25 +16,21 @@ Funtions:
  - printAllAirlines
  - printAllAirport
 """
-file_path = 'Data/airline_routes_custom.json'  #Check if the path is correct
+file_path = 'Data/airline_routes_custom.json'  # Check if the path is correct
 with open(file_path) as file:
     data = json.load(file)
 
 # Main function
-def mainAlgo(data):
+def mainAlgo(data, origin, destination, flight_date):
     df, airport_codes = InitAdjacencyMatrix(data)
     printAllAirport(airport_codes)
 
-
-    valid_booking_date, isHoliday, is_within_one_month = checkDate()
+    valid_booking_date, isHoliday, is_within_one_month = checkDate(flight_date)
     print(f"Validated booking date: {valid_booking_date.strftime('%d/%m/%Y')}")
     print(f"Date a holiday or festive season? {'Yes' if isHoliday else 'No'}")
     print(f"Is this date within one month? {'Yes' if is_within_one_month else 'No'}")
 
-    # Get user input for origin and destination
-    origin = input("\nEnter the origin airport code: ").strip().upper()
     origin = checkAirportCode(origin, airport_codes)
-    destination = input("Enter the destination airport code: ").strip().upper()
     destination = checkAirportCode(destination, airport_codes)
     selected_route = getShortestDistance(origin, destination, airport_codes, df, isHoliday, is_within_one_month)
 
@@ -65,71 +60,66 @@ def floydWarshall(graph):
                 if graph[i][k] != float('inf') and graph[k][j] != float('inf'):
                     graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j])
 
-
 # =========================================================================================================
 
 """ ===================  validity functions  ===================================================== """
 
 def checkAirportCode(airport_code, airport_codes):
-    while airport_code not in airport_codes:
-        print("Invalid airport code. Please try again.")
-        airport_code = input("Enter a valid airport code: ").strip().upper()
+    if airport_code not in airport_codes:
+        raise ValueError("Invalid airport code.")
     return airport_code
 
-
-holiday_months = {1, 3, 6, 12}  #jan, march, june, dec
+holiday_months = {1, 3, 6, 12}  # jan, march, june, dec
 specific_holidays = {
     "25/12", "31/10", "14/02",  # Christmas, Halloween, Valentine's
     "01/01", "19/02",  # New Year's Day, CNY
     "04/07", "01/05", "04/05", "25/10",  # US Independence Day, Labour day, Buddha's Bday, China's republic day
 }
 
-def checkDate(): # (user input --> 1 year or less, String to DATE input, return date)
-    while True:
-        user_input = input("Enter a date (dd/mm/yyyy): ")
-        try:
-            input_date = datetime.strptime(user_input, "%d/%m/%Y")
-            today = datetime.now().date()
-            one_year_ahead = today + timedelta(days=365)
-            one_month_ahead = today + timedelta(days=30)
+def checkDate(user_input):  # (user input --> 1 year or less, String to DATE input, return date)
+    try:
+        input_date = datetime.strptime(user_input, "%d/%m/%Y")
+        today = datetime.now().date()
+        one_year_ahead = today + timedelta(days=365)
+        one_month_ahead = today + timedelta(days=30)
 
-            # Check date range validity
-            if not (today <= input_date.date() <= one_year_ahead): 
-                print("Date must be within 1 year ahead from today.")
-                continue
-            # Check if the date falls within the next 1 month
-            is_within_one_month = input_date.date() <= one_month_ahead
+        # Check date range validity
+        if not (today <= input_date.date() <= one_year_ahead): 
+            raise ValueError("Date must be within 1 year ahead from today.")
+        
+        # Check if the date falls within the next 1 month
+        is_within_one_month = input_date.date() <= one_month_ahead
 
-            # Check if the date falls in a holiday month
-            is_festive_month = input_date.month in holiday_months
+        # Check if the date falls in a holiday month
+        is_festive_month = input_date.month in holiday_months
 
-            # Check if the date is a public holiday
-            is_public_holiday = input_date.strftime("%d/%m") in specific_holidays
+        # Check if the date is a public holiday
+        is_public_holiday = input_date.strftime("%d/%m") in specific_holidays
 
-            # Determine if the date is considered a holiday
-            isHoliday = is_festive_month or is_public_holiday
+        # Determine if the date is considered a holiday
+        isHoliday = is_festive_month or is_public_holiday
 
-            return input_date, isHoliday, is_within_one_month # Returning the date and booleans
+        return input_date, isHoliday, is_within_one_month  # Returning the date and booleans
 
-        except ValueError:
-            print("Invalid date format. Please enter in dd/mm/yyyy.")
+    except ValueError as e:
+        raise ValueError(f"Invalid date format or value: {e}")
 
 # =========================================================================================================
 
 """ ==================  calculation functions  ========================================= """
 
-def costSpike(isHoliday, is_within_one_month): # if < 1 month OR holiday season: price increase
-    spike = 1
-    if isHoliday == True:
+def costSpike(isHoliday, is_within_one_month):  # if < 1 month OR holiday season: price increase
+    spike = 0
+    if isHoliday:
         spike += 0.1
-    if is_within_one_month == True:
+    if is_within_one_month:
         spike += 0.05
     return spike
 
-def getPriceEstimate(basePrice, costSpike): # get price & costSpike()
-    return basePrice * costSpike
+def getPriceEstimate(basePrice, costSpike):  # get price & costSpike()
+    return basePrice * (1 + costSpike)
 
-def layover(origin, destination, airport_codes, df, max_layovers=2):
+def layover(origin, destination, airport_codes, df, max_layovers=2):  # replace max_layovers with user input
     """
     Finds layover routes with the same airline and calculates total distance, duration, and price.
     Returns a list of possible layover routes.
@@ -164,7 +154,6 @@ def layover(origin, destination, airport_codes, df, max_layovers=2):
         
         # Iterate through all possible next airports
         for next_airport in airport_codes:
-            
             # Check if there is a route from current_airport to next_airport
             current_idx = airport_codes.index(current_airport)
             next_idx = airport_codes.index(next_airport)
@@ -190,41 +179,7 @@ def layover(origin, destination, airport_codes, df, max_layovers=2):
     # Sort layover routes by total distance (shortest first)
     layover_routes.sort(key=lambda x: x["total_distance"])
     
-    # Print all possible layover routes
-    if layover_routes:
-        print("\nAvailable layover routes:")
-        for i, route in enumerate(layover_routes):
-            print(f"{i + 1}. {route['airline_name']} ({route['airline_code']}) - Route: {' -> '.join(route['route'])}")
-            print(f"Total Distance: {route['total_distance']} km")
-        
-        if len(layover_routes) == 1:
-            return layover_routes  # Return as a list
-        
-        try:
-            airline_choice = int(input("\nEnter the number corresponding to the airline you want to choose: "))
-            if airline_choice < 1 or airline_choice > len(layover_routes):
-                print("Invalid choice. Please select a valid number.")
-                return []
-        except ValueError:
-            print("Invalid input. Please enter a number.")
-            return []
-        
-        # Return the selected layover route as a list
-        return [layover_routes[airline_choice - 1]]
-    else:
-        return []  # Return an empty list if no layover routes are found
-
-def selectAirline(route_info): #Get user input for airline selection
-    try:
-        airline_choice = int(input("\nEnter the number corresponding to the airline you want to choose: "))
-        if airline_choice < 1 or airline_choice > len(route_info):
-            print("Invalid choice. Please select a valid number.")
-            return 
-        return airline_choice
-    
-    except ValueError:
-        print("Invalid input. Please enter a number.")
-        return
+    return layover_routes  # Return all layover routes
 
 def getShortestDistance(origin, destination, airport_codes, df, isHoliday, is_within_one_month):
     """
@@ -290,37 +245,7 @@ def getShortestDistance(origin, destination, airport_codes, df, isHoliday, is_wi
         else:
             route['total_price'] = getPriceEstimate(route['total_price'], costSpike(isHoliday, is_within_one_month))
 
-    # Display all available routes
-    print("\n All Available routes:")
-    for i, route in enumerate(all_routes):
-        if route["type"] == "direct":
-            print(f"{i + 1}. {route['airline_name']} ({route['airline_code']}) - Route: {' -> '.join(route['route'])}")
-            print(f"   Distance: {route['distance']} km")
-        else:  # Layover route
-            print(f"{i + 1}. {route['airline_name']} ({route['airline_code']}) - Route: {' -> '.join(route['route'])}")
-            print(f"   Total Distance: {route['total_distance']} km")
-    
-    # Automatically select if there's only one route
-    if len(all_routes) == 1:
-        return all_routes[0]
-    
-    # Get user input for route selection
-    try:
-        route_choice = int(input("\nEnter the number corresponding to the route you want to choose: "))
-        if route_choice < 1 or route_choice > len(all_routes):
-            print("Invalid choice. Please select a valid number.")
-            return None
-    except ValueError:
-        print("Invalid input. Please enter a number.")
-        return None
-    
-    # selected_route = all_routes[route_choice - 1]
-    # if selected_route['type'] == "direct":
-    #     selected_route['price'] = getPriceEstimate(selected_route['price'], costSpike(isHoliday, is_within_one_month))
-    # else:
-    #     selected_route['total_price'] = getPriceEstimate(selected_route['total_price'], costSpike(isHoliday, is_within_one_month))
-
-    return all_routes[route_choice - 1]
+    return all_routes  # Return all available routes
 
 # =========================================================================================================
 
@@ -332,5 +257,14 @@ def printAllAirport(airport_codes):
 
 # =========================================================================================================
 
-mainAlgo(data)
+# Example usage (for testing purposes, can be removed in production)
+if __name__ == "__main__":
+    # Example inputs for testing
+    origin = "JFK"  # Example origin airport code
+    destination = "LAX"  # Example destination airport code
+    flight_date = "15/12/2023"  # Example flight date
 
+    try:
+        mainAlgo(data, origin, destination, flight_date)
+    except Exception as e:
+        print(f"Error: {e}")
