@@ -1,0 +1,327 @@
+ScreenManager:
+    FirstScreen
+    SecondScreen
+<FirstScreen>:
+    name: "first"
+    MDFloatLayout:
+        # Background Image
+        Image:
+            source: "images/firstpage_backgroundimg.jpg"
+            allow_stretch: True
+            keep_ratio: False
+        # Transparent Overlay
+        MDBoxLayout:
+            orientation: 'vertical'
+            size_hint: 1, 1
+            md_bg_color: 0, 0, 0, 0.3
+        # Flight Search Card
+        MDCard:
+            size_hint: 0.9, 0.5
+            pos_hint: {"center_x": 0.5, "center_y": 0.6}
+            elevation: 10
+            radius: [20, 20, 20, 20]
+            padding: 20
+            spacing: 10
+            orientation: 'vertical'
+            MDLabel:
+                text: "Flight Finder"
+                font_style: "H5"
+                halign: "center"
+                theme_text_color: "Primary"
+            
+            # Departure airport field with error label
+            MDTextField:
+                id: text_input1
+                hint_text: "Departure Airport (e.g., JFK)"
+                icon_right: "airplane-takeoff"
+                mode: "fill"
+                fill_color: (1, 1, 1, 0.2)
+                radius: [10, 10, 10, 10]
+                max_text_length: 3  # Limit to 3 characters
+                input_filter: lambda text, from_undo: text.upper()  # Auto-uppercase input
+            MDLabel:
+                id: departure_error
+                text: ""
+                theme_text_color: "Custom"
+                text_color: 0.9, 0.2, 0.2, 1  # Red text
+                size_hint_y: None
+                height: self.texture_size[1] if self.text else 0
+                font_style: "Caption"
+                font_size: "12sp"
+                padding: [5, 0, 0, 0]  # Left padding
+                markup: True
+            
+            # Arrival airport field with error label
+            MDTextField:
+                id: text_input2
+                hint_text: "Arrival Airport (e.g., LAX)"
+                icon_right: "airplane-landing"
+                mode: "fill"
+                fill_color: (1, 1, 1, 0.2)
+                radius: [10, 10, 10, 10]
+                max_text_length: 3  # Limit to 3 characters
+                input_filter: lambda text, from_undo: text.upper()  # Auto-uppercase input
+            MDLabel:
+                id: arrival_error
+                text: ""
+                theme_text_color: "Custom"
+                text_color: 0.9, 0.2, 0.2, 1  # Red text
+                size_hint_y: None
+                height: self.texture_size[1] if self.text else 0
+                font_style: "Caption"
+                font_size: "12sp"
+                padding: [5, 0, 0, 0]  # Left padding
+                markup: True
+            
+            # Date field with error label
+            MDTextField:
+                id: date_input
+                hint_text: "Select Date"
+                icon_right: "calendar"
+                mode: "fill"
+                fill_color: (1, 1, 1, 0.2)
+                radius: [10, 10, 10, 10]
+                readonly: True
+                on_focus: if self.focus: app.show_date_picker()
+            MDLabel:
+                id: date_error
+                text: ""
+                theme_text_color: "Custom"
+                text_color: 0.9, 0.2, 0.2, 1  # Red text
+                size_hint_y: None
+                height: self.texture_size[1] if self.text else 0
+                font_style: "Caption"
+                font_size: "12sp"
+                padding: [5, 0, 0, 0]  # Left padding
+                markup: True
+            
+            MDRaisedButton:
+                text: "Find Routes"
+                md_bg_color: 0, 0.6, 1, 1
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                pos_hint: {"center_x": 0.5}
+                on_release: app.search_flights()
+                elevation: 5
+
+
+        MDLabel:
+            id: airport_list_label
+            text: ""
+            theme_text_color: "Secondary"
+            halign: "center"
+            pos_hint: {"center_x": 0.5, "center_y": 0.4}
+        
+        MDRaisedButton:
+            text: "Show Airport Codes"
+            pos_hint: {"center_x": 0.5, "center_y": 0.3}
+            on_release: root.show_airport_list()
+        MDRaisedButton:
+            text: "Exit App"
+            md_bg_color: 0.8, 0.2, 0.2, 1  
+            theme_text_color: "Custom"
+            text_color: 1, 1, 1, 1
+            pos_hint: {"center_x": 0.5, "center_y": 0.1}
+            on_release: app.exit_app()
+<SecondScreen>:
+    name: "second"
+    canvas.before:
+        Color:
+            rgba: 0.95, 0.95, 0.95, 1  # Light gray background
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: "10dp"
+        padding: "15dp"
+        
+        # Top section with filter controls
+        MDCard:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: "100dp"
+            elevation: 1
+            radius: [10, 10, 10, 10]
+            padding: "15dp"
+            md_bg_color: 1, 1, 1, 1
+            
+            MDLabel:
+                text: "Flight Routes"
+                font_style: "H5"
+                font_size: "18sp"
+                size_hint_y: None
+                height: "30dp"
+                
+            MDBoxLayout:
+                orientation: 'horizontal'
+                spacing: "20dp"
+                size_hint_y: None
+                height: "40dp"
+                
+                # Airline filter
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    
+                    MDLabel:
+                        text: "Airline"
+                        font_style: "Caption"
+                        size_hint_y: None
+                        height: "15dp"
+                        theme_text_color: "Secondary"
+                        
+                    MDDropDownItem:
+                        id: airline_filter
+                        text: "All"
+                        font_style: "Body1"
+                        on_release: root.airline_menu.open()
+                
+                # Price filter
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    
+                    MDLabel:
+                        text: "Price Range"
+                        font_style: "Caption"
+                        size_hint_y: None
+                        height: "15dp"
+                        theme_text_color: "Secondary"
+                        
+                    MDDropDownItem:
+                        id: cost_filter
+                        text: "All"
+                        font_style: "Body1"
+                        on_release: root.cost_menu.open()
+                
+                # Stops filter
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    
+                    MDLabel:
+                        text: "Stops"
+                        font_style: "Caption"
+                        size_hint_y: None
+                        height: "15dp"
+                        theme_text_color: "Secondary"
+                        
+                    MDDropDownItem:
+                        id: layover_filter
+                        text: "All"
+                        font_style: "Body1"
+                        on_release: root.layover_menu.open()
+                
+                # Reset button
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint_x: 0.25
+                    
+                    MDLabel:
+                        text: " "
+                        size_hint_y: None
+                        height: "15dp"
+                    
+                    MDRaisedButton:
+                        text: "Reset Filters"
+                        size_hint_y: None
+                        height: "36dp"
+                        md_bg_color: 0.2, 0.6, 0.9, 1
+                        on_release: root.reset_filters()
+                        
+        # Main content area
+        MDBoxLayout:
+            orientation: 'horizontal'
+            spacing: "15dp"
+            
+            # Routes column
+            MDCard:
+                orientation: 'vertical'
+                size_hint_x: 0.4
+                elevation: 1
+                radius: [10, 10, 10, 10]
+                padding: "10dp"
+                md_bg_color: 1, 1, 1, 1
+                
+                MDLabel:
+                    text: "Available Routes"
+                    font_style: "H6"
+                    size_hint_y: None
+                    height: "40dp"
+                    padding: ["10dp", 0]
+                
+                ScrollView:
+                    do_scroll_x: False
+                    MDGridLayout:
+                        id: routes_grid
+                        cols: 1
+                        spacing: "10dp"
+                        padding: "5dp"
+                        size_hint_y: None
+                        height: self.minimum_height
+            
+            # Map column
+            MDCard:
+                orientation: 'vertical'
+                size_hint_x: 0.6
+                elevation: 1
+                radius: [10, 10, 10, 10]
+                padding: "10dp"
+                md_bg_color: 1, 1, 1, 1
+                
+                MDBoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: "40dp"
+                    
+                    MDLabel:
+                        text: "Route Map"
+                        font_style: "H6"
+                        size_hint_x: 0.7
+                    
+                    # Map controls
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        spacing: "5dp"
+                        size_hint_x: 0.3
+                        
+                        MDIconButton:
+                            icon: "plus"
+                            on_release: map_view.zoom += 1 if map_view.zoom < 19 else 0
+                        
+                        MDIconButton:
+                            icon: "minus"
+                            on_release: map_view.zoom -= 1 if map_view.zoom > 2 else 0
+                        
+                        MDIconButton:
+                            icon: "refresh"
+                            on_release: root.reset_map()
+                
+                MapView:
+                    id: map_view
+                    zoom: 5
+        
+        # Bottom navigation bar
+        MDBoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: '50dp'
+            spacing: "20dp"
+            pos_hint: {"center_x": 0.5}
+            
+            MDRaisedButton:
+                text: "Back to Search"
+                size_hint_x: None
+                width: "150dp"
+                on_release: root.on_back()
+                
+            MDRaisedButton:
+                text: "Exit App"
+                md_bg_color: 0.8, 0.2, 0.2, 1 
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                size_hint_x: None
+                width: "100dp"
+                on_release: app.exit_app()
