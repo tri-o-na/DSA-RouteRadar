@@ -37,8 +37,8 @@ ScreenManager:
                 mode: "fill"
                 fill_color: (1, 1, 1, 0.2)
                 radius: [10, 10, 10, 10]
-                max_text_length: 3  # Limit to 3 characters
-                input_filter: lambda text, from_undo: text.upper()  # Auto-uppercase input
+                input_filter: lambda text, from_undo: text.upper()  
+                font_size: "16sp"
             MDLabel:
                 id: departure_error
                 text: ""
@@ -59,8 +59,8 @@ ScreenManager:
                 mode: "fill"
                 fill_color: (1, 1, 1, 0.2)
                 radius: [10, 10, 10, 10]
-                max_text_length: 3  # Limit to 3 characters
-                input_filter: lambda text, from_undo: text.upper()  # Auto-uppercase input
+                input_filter: lambda text, from_undo: text.upper()  
+                font_size: "16sp"
             MDLabel:
                 id: arrival_error
                 text: ""
@@ -102,7 +102,7 @@ ScreenManager:
                 text_color: 1, 1, 1, 1
                 pos_hint: {"center_x": 0.5}
                 on_release: app.search_flights()
-                elevation: 5
+                elevation: 2
 
 
         MDLabel:

@@ -196,7 +196,9 @@ class FirstScreen(Screen):
         self.suggestion_dropdown = MDDropdownMenu(
             items=items,
             width_mult=4,
-            caller=instance
+            caller=instance,
+            hor_growth="left",
+            pos_hint={"center_x": 0.15, "center_y": 0.53}
         )
         
         self.suggestion_dropdown.open()
