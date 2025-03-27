@@ -1,0 +1,1 @@
+[{"type": "direct", "airline_code": "CX", "airline_name": "Cathay Pacific", "duration": 150, "distance": 1680, "price": 308.2, "route": ["BKK", "HKG"], "coordinates": [[13.689, 100.7501], [22.308, 113.9185]], "layovers": 0, "baggage_weight": "10kg", "id": "Cathay Pacific-BKK-HKG-0"}]

@@ -16,18 +16,25 @@ ScreenManager:
             md_bg_color: 0, 0, 0, 0.3
         # Flight Search Card
         MDCard:
-            size_hint: 0.9, 0.5
+            size_hint: 0.9, 0.70
             pos_hint: {"center_x": 0.5, "center_y": 0.6}
             elevation: 10
             radius: [20, 20, 20, 20]
             padding: 20
             spacing: 10
             orientation: 'vertical'
-            MDLabel:
-                text: "Flight Finder"
-                font_style: "H5"
-                halign: "center"
-                theme_text_color: "Primary"
+            MDBoxLayout:
+                size_hint: 1, None
+                height: "250dp"
+                padding: [0, "20dp", 0, "20dp"]
+                pos_hint: {"center_x": 0.7}  
+                
+                Image:
+                    source: "images/logo.jpg"
+                    size_hint: None, None
+                    size: "800dp", "200dp"
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}  
+                    allow_stretch: True
             
             # Departure airport field with error label
             MDTextField:
@@ -94,6 +101,44 @@ ScreenManager:
                 font_size: "12sp"
                 padding: [5, 0, 0, 0]  # Left padding
                 markup: True
+            # Baggage selection section
+            MDBoxLayout:
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: dp(60)
+                padding: [0, "10dp", 0, "10dp"]
+                md_bg_color: [0.95, 0.95, 0.95, 1]  
+                radius: [10, 10, 10, 10]
+                
+                MDBoxLayout:
+                    orientation: 'horizontal'
+                    padding: ["15dp", 0, 0, 0]
+                    spacing: "10dp"
+                    
+                    MDIcon:
+                        icon: "bag-checked"
+                        theme_text_color: "Custom"
+                        text_color: 0, 0.6, 1, 1  
+                        size_hint_x: None
+                        width: dp(24)
+                        pos_hint: {"center_y": 0.5}
+                    
+                    MDLabel:
+                        text: "Baggage Allowance:"
+                        theme_text_color: "Primary"
+                        font_style: "Body1"
+                        size_hint_x: None
+                        width: dp(140)
+                        pos_hint: {"center_y": 0.5}
+                
+                MDDropDownItem:
+                    id: baggage_weight
+                    text: "10kg"
+                    font_style: "Body1"
+                    theme_text_color: "Custom"
+                    text_color: 0, 0.6, 1, 1  
+                    pos_hint: {"center_y": 0.5}
+                    on_release: root.show_baggage_menu()
             
             MDRaisedButton:
                 text: "Find Routes"
@@ -114,7 +159,7 @@ ScreenManager:
         
         MDRaisedButton:
             text: "Show Airport Codes"
-            pos_hint: {"center_x": 0.5, "center_y": 0.3}
+            pos_hint: {"center_x": 0.5, "center_y": 0.2}
             on_release: root.show_airport_list()
         MDRaisedButton:
             text: "Exit App"
@@ -137,7 +182,6 @@ ScreenManager:
         spacing: "10dp"
         padding: "15dp"
         
-        # Top section with filter controls
         MDCard:
             orientation: 'vertical'
             size_hint_y: None
@@ -147,12 +191,24 @@ ScreenManager:
             padding: "15dp"
             md_bg_color: 1, 1, 1, 1
             
-            MDLabel:
-                text: "Flight Routes"
-                font_style: "H5"
-                font_size: "18sp"
+            MDBoxLayout:
+                orientation: 'horizontal'
                 size_hint_y: None
                 height: "30dp"
+                
+                MDLabel:
+                    text: "Flight Routes"
+                    font_style: "H5"
+                    font_size: "18sp"
+                    size_hint_x: 0.8
+                
+                MDIconButton:
+                    icon: "bookmark-multiple"
+                    theme_text_color: "Custom"
+                    text_color: [0.9, 0.7, 0, 1]  
+                    tooltip_text: "Favorites"
+                    pos_hint: {"right": 1, "center_y": 0.5}
+                    on_release: root.show_favorites()
                 
             MDBoxLayout:
                 orientation: 'horizontal'
