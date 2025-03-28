@@ -2,34 +2,31 @@ import json
 import numpy as np
 import pandas as pd
 
-# Step 1: Load the JSON data
-file_path = 'Data/airline_routes_custom.json'  #Check if the path is correct
+file_path = 'Data/airline_routes_custom.json' 
 with open(file_path) as file:
     data = json.load(file)
 
-# Define the InitAdjacencyMatrix function
 def InitAdjacencyMatrix(data):  
     
-    # Step 1: Get all unique airport codes
-    airport_codes = sorted(data.keys())  # Sort for consistent ordering
-    num_airports = len(airport_codes)
-
-    # Step 2: Create an adjacency matrix initialized with None
-    adj_matrix = [[None] * num_airports for _ in range(num_airports)]
-
-    # Step 3: Fill diagonal with 0 (self-to-self distance)
+    
+    airport_codes = sorted(data.keys()) # Pull all the airports and sort them
+    num_airports = len(airport_codes) # Count the no. of airports
+    
+    adj_matrix = [[None] * num_airports for _ in range(num_airports)] #initialise adjacency matrix
     for i in range(num_airports):
-        adj_matrix[i][i] = [("N/A", "N/A", 0)]  # No airline, no duration
+        adj_matrix[i][i] = [("N/A", "N/A", 0)] # Set the diagonal value to [("N/A", "N/A", 0)]
+    # Meaning: No airline, no destination, and a travel duration of 0
+    # This represents "self-loops" (i.e., no need to travel from an airport to itself)
 
-    # Step 4: Create airport index mapping
-    airport_index = {code: i for i, code in enumerate(airport_codes)}
+   
+    airport_index = {code: i for i, code in enumerate(airport_codes)} # create a dictionary to map airport codes to their corresponding index in the adjacency matrix
 
-    # Step 5: Populate adjacency matrix with (airline_code, airline_name, duration)
-    for airport, details in data.items():
+   
+    for airport, details in data.items(): # get the row index of source airport
         src_idx = airport_index[airport]
-        for route in details["routes"]:
-            dest_code = route["airport_code"]
-            dest_idx = airport_index[dest_code]
+        for route in details["routes"]:  # iterate thru connections from the source airport
+            dest_code = route["airport_code"] # get dest airport code
+            dest_idx = airport_index[dest_code] #get column index for destination airport
 
             route_info = []
             for airline in route["airlines"]:
@@ -39,7 +36,7 @@ def InitAdjacencyMatrix(data):
                 distance = route["distance"]
                 base_price = route["base_price"]
                 
-                route_info.append((airline_code, airline_name, duration, distance, base_price))
+                route_info.append((airline_code, airline_name, duration, distance, base_price)) #store all details as tuple, add to list
                 
             # Store the route information in the matrix
             adj_matrix[src_idx][dest_idx] = route_info
