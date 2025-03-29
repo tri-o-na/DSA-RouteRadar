@@ -325,6 +325,26 @@ class FirstScreen(Screen):
             self.ids.date_error.text = "[color=ff3333]Flight date is required[/color]"
             has_errors = True
         
+        # Get today's date
+        today = date.today()
+
+        # Add 1 year (365 days)
+        one_year_later = today + timedelta(days=365)
+
+        # Format the result
+        formatted_date = one_year_later.strftime("%d/%m/%Y")
+
+        # Validate flight date
+        if not flight_date:
+            self.ids.date_error.text = "[color=ff3333]Flight date is required[/color]"
+            has_errors = True
+        elif flight_date < date.today().strftime("%d/%m/%Y"):
+            self.ids.date_error.text = "[color=ff3333]Flight date cannot be earlier than today[/color]"
+            has_errors = True
+        elif flight_date > formatted_date:
+            self.ids.date_error.text = "[color=ff3333]Flight date must be within 1 Year[/color]"
+            has_errors = True
+        
         if has_errors:
             return
 
