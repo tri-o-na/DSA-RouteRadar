@@ -149,6 +149,14 @@ ScreenManager:
                 on_release: app.search_flights()
                 elevation: 2
 
+            MDLabel:
+                id: error_label
+                text: ""
+                theme_text_color: "Error"
+                halign: "center"
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding: [0, 10, 0, 10]
 
         MDLabel:
             id: airport_list_label
