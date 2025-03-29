@@ -53,6 +53,39 @@
 						"airline_name": "Singapore Airlines"
 					}
 				]
+			},
+			{
+				"airport_code": "DEL",
+				"distance": 3880,
+				"duration": 330,
+				"base_price": 488,
+				"airlines": [
+					{
+						"airline_code": "AI",
+						"airline_name": "Air India"
+					},
+					{
+						"airline_code": "SQ",
+						"airline_name": "Singapore Airlines"
+					}
+				]
+			},
+			{
+				"airport_code": "DXB",
+				"distance": 5850,
+				"duration": 480,
+				"base_price":685,
+				"airlines": [
+					{
+						"airline_code": "EK",
+						"airline_name": "Emirates"
+					},
+					{
+						"airline_code": "SQ",
+						"airline_name": "Singapore Airlines"
+					}
+				]
+
 			}
 		]
 	},
@@ -172,6 +205,22 @@
 						"airline_name": "Cathay Pacific"
 					}
 				]
+			},
+			{
+				"airport_code": "DEL",
+				"distance": 2580,
+				"duration": 210,
+				"base_price": 358,
+				"airlines": [
+					{
+						"airline_code": "AI",
+						"airline_name": "Air India"
+					},
+					{
+						"airline_code": "TG",
+						"airline_name": "Thai Airways"
+					}
+				]
 			}
 		]
 	},
@@ -274,6 +323,38 @@
 						"airline_name": "Singapore Airlines"
 					}
 				]
+			},
+			{
+				"airport_code": "PEK",
+				"distance": 1970,
+				"duration": 180,
+				"base_price": 296,
+				"airlines": [
+					{
+						"airline_code": "CA",
+						"airline_name": "Air China"
+					},
+					{
+						"airline_code": "CX",
+						"airline_name": "Cathay Pacific"
+					}
+				]
+			},
+			{
+				"airport_code": "ICN",
+				"distance": 2060,
+				"duration": 180,
+				"base_price": 306,
+				"airlines": [
+					{
+						"airline_code": "KE",
+						"airline_name": "Korean Air"
+					},
+					{
+						"airline_code": "CX",
+						"airline_name": "Cathay Pacific"
+					}
+				]
 			}
 		]
 	},
@@ -364,6 +445,38 @@
 						"airline_name": "Japan Airlines"
 					}
 				]
+			},
+			{
+				"airport_code": "ICN",
+				"distance": 1160,
+				"duration": 120,
+				"base_price": 218,
+				"airlines": [
+					{
+						"airline_code": "KE",
+						"airline_name": "Korean Air"
+					},
+					{
+						"airline_code": "JL",
+						"airline_name": "Japan Airlines"
+					}
+				]
+			},
+			{
+				"airport_code": "PEK",
+				"distance": 2100,
+				"duration": 195,
+				"base_price": 316,
+				"airlines": [
+					{
+						"airline_code": "CA",
+						"airline_name": "Air China"
+					},
+					{
+						"airline_code": "NH",
+						"airline_name": "All Nippon Airways"
+					}
+				]
 			}
 		]
 	},
@@ -436,6 +549,202 @@
 					{
 						"airline_code": "JL",
 						"airline_name": "Japan Airlines"
+					}
+				]
+			}
+		]
+	},
+	"DEL": {
+		"airport_code": "DEL",
+		"airport_name": "Indira Gandhi International Airport",
+		"city_name": "New Delhi",
+		"country_code": "IN",
+		"country_name": "India",
+		"elevation": 237,
+		"latitude": "28.5562",
+		"longitude": "77.1000",
+		"timezone": "Asia/Kolkata",
+		"routes": [
+			{
+				"airport_code": "SIN",
+				"distance": 3880,
+				"duration": 330,
+				"base_price": 488,
+				"airlines": [
+					{
+						"airline_code": "AI",
+						"airline_name": "Air India"
+					},
+					{
+						"airline_code": "SQ",
+						"airline_name": "Singapore Airlines"
+					}
+				]
+			},
+			{
+				"airport_code": "BKK",
+				"distance": 2580,
+				"duration": 210,
+				"base_price": 358,
+				"airlines": [
+					{
+						"airline_code": "AI",
+						"airline_name": "Air India"
+					},
+					{
+						"airline_code": "TG",
+						"airline_name": "Thai Airways"
+					}
+				]
+			},
+			{
+				"airport_code": "DXB",
+				"distance": 2200,
+				"duration": 210,
+				"base_price": 326,
+				"airlines": [
+					{
+						"airline_code": "EK",
+						"airline_name": "Emirates"
+					},
+					{
+						"airline_code": "AI",
+						"airline_name": "Air India"
+					}
+				]
+			}
+		]
+	},
+	"ICN": {
+		"airport_code": "ICN",
+		"airport_name": "Incheon International Airport",
+		"city_name": "Seoul",
+		"country_code": "KR",
+		"country_name": "South Korea",
+		"elevation": 23,
+		"latitude": "37.4602",
+		"longitude": "126.4407",
+		"timezone": "Asia/Seoul",
+		"routes": [
+			{
+				"airport_code": "NRT",
+				"distance": 1160,
+				"duration": 120,
+				"base_price": 218,
+				"airlines": [
+					{
+						"airline_code": "KE",
+						"airline_name": "Korean Air"
+					},
+					{
+						"airline_code": "JL",
+						"airline_name": "Japan Airlines"
+					}
+				]
+			},
+			{
+				"airport_code": "HKG",
+				"distance": 2060,
+				"duration": 180,
+				"base_price": 306,
+				"airlines": [
+					{
+						"airline_code": "KE",
+						"airline_name": "Korean Air"
+					},
+					{
+						"airline_code": "CX",
+						"airline_name": "Cathay Pacific"
+					}
+				]
+			}
+		]
+	},
+	"PEK": {
+		"airport_code": "PEK",
+		"airport_name": "Beijing Capital International Airport",
+		"city_name": "Beijing",
+		"country_code": "CN",
+		"country_name": "China",
+		"elevation": 116,
+		"latitude": "40.0799",
+		"longitude": "116.6031",
+		"timezone": "Asia/Shanghai",
+		"routes": [
+			{
+				"airport_code": "HKG",
+				"distance": 1970,
+				"duration": 180,
+				"base_price": 296,
+				"airlines": [
+					{
+						"airline_code": "CA",
+						"airline_name": "Air China"
+					},
+					{
+						"airline_code": "CX",
+						"airline_name": "Cathay Pacific"
+					}
+				]
+			},
+			{
+				"airport_code": "NRT",
+				"distance": 2100,
+				"duration": 195,
+				"base_price": 316,
+				"airlines": [
+					{
+						"airline_code": "CA",
+						"airline_name": "Air China"
+					},
+					{
+						"airline_code": "NH",
+						"airline_name": "All Nippon Airways"
+					}
+				]
+			}
+		]
+	},
+	"DXB": {
+		"airport_code": "DXB",
+		"airport_name": "Dubai International Airport",
+		"city_name": "Dubai",
+		"country_code": "AE",
+		"country_name": "United Arab Emirates",
+		"elevation": 62,
+		"latitude": "25.2532",
+		"longitude": "55.3657",
+		"timezone": "Asia/Dubai",
+		"routes": [
+			{
+				"airport_code": "SIN",
+				"distance": 5850,
+				"duration": 480,
+				"base_price": 685,
+				"airlines": [
+					{
+						"airline_code": "EK",
+						"airline_name": "Emirates"
+					},
+					{
+						"airline_code": "SQ",
+						"airline_name": "Singapore Airlines"
+					}
+				]
+			},
+			{
+				"airport_code": "DEL",
+				"distance": 2200,
+				"duration": 210,
+				"base_price": 326,
+				"airlines": [
+					{
+						"airline_code": "EK",
+						"airline_name": "Emirates"
+					},
+					{
+						"airline_code": "AI",
+						"airline_name": "Air India"
 					}
 				]
 			}
