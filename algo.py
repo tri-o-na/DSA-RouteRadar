@@ -48,18 +48,6 @@ def mainAlgo(data, origin, destination, flight_date):
     else:
         print(f"No route found from {origin} to {destination}.")
 
-# Main algo (distance)
-def floydWarshall(graph):
-    """Runs the Floyd-Warshall algorithm on the given adjacency matrix."""
-    V = len(graph)  # Number of airports
-
-    # Run Floyd-Warshall algorithm
-    for k in range(V):  # Intermediate vertex
-        for i in range(V):  # origin location
-            for j in range(V):  # destination location
-                if graph[i][k] != float('inf') and graph[k][j] != float('inf'):
-                    graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j])
-
 # =========================================================================================================
 
 """ ===================  validity functions  ===================================================== """
@@ -211,6 +199,7 @@ def layover(origin, destination, airport_codes, df, max_layovers=3):  # replace 
     
     return layover_routes  # Return all layover routes
 
+# main algo (distance + layover)
 def getShortestDistance(origin, destination, airport_codes, df, isHoliday, is_within_one_month):
     """
     Finds the shortest distance route between two airports and returns the selected route information.
