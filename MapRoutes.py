@@ -262,7 +262,8 @@ class FirstScreen(Screen):
     
     def show_airport_list(self):
         """Display the available airport codes in a label."""
-        airport_list_text = ", ".join(self.airport_codes)  
+        airport_list_text = "\n".join([f"{code} - {full_name}" for code, full_name in self.airport_codes])
+        
         if not self.dialog:
             self.dialog = MDDialog(
                 title="Available Airports",
@@ -272,7 +273,9 @@ class FirstScreen(Screen):
                         text="OK",
                         on_release=lambda x: self.dialog.dismiss()
                     )
-                ]
+                ],
+                size_hint=(0.8, None),
+                height=dp(400) 
             )
         else:
             self.dialog.text = airport_list_text  
