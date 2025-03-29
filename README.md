@@ -22,8 +22,9 @@ python MapRoutes.py
 - Display flight routes on a map
 - Show ticket prices and available airlines
 - Include layover details
-- Include baggage details
+- Select baggage weight – prices will adjust accordingly
 - Filter by price, airline and layover
+- Users are able to favourite routes
 
 ## GUI
 - Used a python GUI called kivy to show the routes
