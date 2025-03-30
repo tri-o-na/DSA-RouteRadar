@@ -347,7 +347,7 @@ class FirstScreen(Screen):
         valid_booking_date, isHoliday, is_within_one_month = checkDate(flight_date)
         try:
             # Get routes using the main algorithm
-            routes = getShortestDistance(departing, arriving, airport_codes, df, isHoliday, is_within_one_month)
+            routes = routeRadarAlgo(departing, arriving, airport_codes, df, isHoliday, is_within_one_month)
             print(f"Search completed for {departing} to {arriving}")
             print(f"Routes found: {len(routes) if routes is not None else 0}")
             if not routes:

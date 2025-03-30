@@ -32,7 +32,7 @@ def mainAlgo(data, origin, destination, flight_date):
 
     origin = checkAirportCode(origin, airport_codes)
     destination = checkAirportCode(destination, airport_codes)
-    selected_route = getShortestDistance(origin, destination, airport_codes, df, isHoliday, is_within_one_month)
+    selected_route = routeRadarAlgo(origin, destination, airport_codes, df, isHoliday, is_within_one_month)
 
     if selected_route:
         if selected_route['type'] == "layover":  # Layover route
@@ -200,7 +200,7 @@ def layover(origin, destination, airport_codes, df, max_layovers=3):  # replace 
     return layover_routes  # Return all layover routes
 
 # main algo (distance + layover)
-def getShortestDistance(origin, destination, airport_codes, df, isHoliday, is_within_one_month):
+def routeRadarAlgo(origin, destination, airport_codes, df, isHoliday, is_within_one_month):
     """
     Finds the shortest distance route between two airports and returns the selected route information.
     Combines direct and layover routes into a single list, sorted by total distance.
